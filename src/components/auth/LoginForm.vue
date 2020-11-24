@@ -21,6 +21,7 @@
 						placeholder="아이디"
 						v-model="userId"
 						ref="userId"
+						@keyup.enter="login"
 					/>
 				</div>
 				<div class="input-box input-box-icon">
@@ -31,6 +32,7 @@
 						placeholder="비밀번호"
 						ref="password"
 						v-model="password"
+						@keyup.enter="login"
 					/>
 				</div>
 				<div class="login-option">
