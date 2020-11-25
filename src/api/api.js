@@ -12,7 +12,7 @@ function createInstance() {
 }
 
 const instance = createInstance();
-
+//test
 function doAxios(url, method, params, config) {
 	store.state.spinnerStatus = true;
 	return instance({
