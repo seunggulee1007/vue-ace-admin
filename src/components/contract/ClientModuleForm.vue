@@ -1,7 +1,7 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__list">
-			<h4 class="section-title">
+			<h4 class="section__title">
 				<span>고객사 현황</span>
 			</h4>
 			<div class="lst-wrap">
@@ -92,11 +92,11 @@
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section-title">고객사 모듈 등록</h3>
+					<h3 class="section__title">고객사 모듈 등록</h3>
 				</div>
 				<article class="article">
 					<div class="article-top">
-						<strong class="content-title">
+						<strong class="content__title">
 							고객사명
 						</strong>
 					</div>

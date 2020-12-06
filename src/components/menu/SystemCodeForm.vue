@@ -1,7 +1,7 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__tree">
-			<h4 class="section-title">
+			<h4 class="section__title">
 				<span>시스템 코드</span>
 			</h4>
 			<div class="tree-area">
@@ -68,7 +68,7 @@
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section-title">시스템 코드 등록</h3>
+					<h3 class="section__title">시스템 코드 등록</h3>
 					<div class="buttons">
 						<button type="button" class="button button__add">
 							<span class="icon icon-add"></span>
@@ -86,7 +86,7 @@
 								<span class="input-checkbox">
 									<input type="checkbox" id="checkboxCheck1" />
 									<label for="checkboxCheck1" class="input-checkbox__label icon-checkbox-purple">
-										<span class="content-title">유연근무</span>
+										<span class="content__title">유연근무</span>
 									</label>
 								</span>
 							</div>
@@ -180,7 +180,7 @@
 								<span class="input-checkbox">
 									<input type="checkbox" id="checkboxCheck2" />
 									<label for="checkboxCheck2" class="input-checkbox__label icon-checkbox-purple">
-										<span class="content-title">영업CRM</span>
+										<span class="content__title">영업CRM</span>
 									</label>
 								</span>
 							</div>

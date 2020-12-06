@@ -1,7 +1,7 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__tree">
-			<h4 class="section-title">
+			<h4 class="section__title">
 				<span>모듈</span>
 			</h4>
 			<div class="tree-area">
@@ -68,7 +68,7 @@
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section-title">프로그램 등록</h3>
+					<h3 class="section__title">프로그램 등록</h3>
 				</div>
 				<article class="article">
 					<div class="article-content">

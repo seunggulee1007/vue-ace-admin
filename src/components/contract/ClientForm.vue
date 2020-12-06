@@ -3,13 +3,13 @@
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section-title">고객사 등록</h3>
+					<h3 class="section__title">고객사 등록</h3>
 				</div>
 				<article class="article article__client">
 					<div class="items-wrap">
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">거래처명</p>
+								<p class="component__title">거래처명</p>
 							</div>
 							<div class="input-box">
 								<input class="input " type="text" placeholder="입력하세요" />
@@ -19,7 +19,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">거래처 종류</p>
+								<p class="component__title">거래처 종류</p>
 							</div>
 							<div class="input-box">
 								<select name="" id="" class="input-select">
@@ -32,7 +32,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">사업자번호</p>
+								<p class="component__title">사업자번호</p>
 							</div>
 							<div class="input-box">
 								<input class="input " type="text" placeholder="하이픈(-) 없이 입력하세요" />
@@ -42,7 +42,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">대표자명</p>
+								<p class="component__title">대표자명</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -50,7 +50,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">법인등록번호</p>
+								<p class="component__title">법인등록번호</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -58,7 +58,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">업태</p>
+								<p class="component__title">업태</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -66,7 +66,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">업종</p>
+								<p class="component__title">업종</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -74,7 +74,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">주소</p>
+								<p class="component__title">주소</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" readonly />
@@ -83,7 +83,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">대표 전화번호</p>
+								<p class="component__title">대표 전화번호</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -91,7 +91,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">담당자</p>
+								<p class="component__title">담당자</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -99,7 +99,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">휴대전화</p>
+								<p class="component__title">휴대전화</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -107,7 +107,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">E-Mail</p>
+								<p class="component__title">E-Mail</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -115,7 +115,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">계약금액</p>
+								<p class="component__title">계약금액</p>
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" placeholder="입력하세요" />
@@ -123,7 +123,7 @@
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
-								<p class="item-title">계약기간</p>
+								<p class="component__title">계약기간</p>
 							</div>
 							<div class="input-box-wrap input-term">
 								<div class="input-box">
