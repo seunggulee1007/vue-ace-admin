@@ -10,17 +10,14 @@
 					<span>Agile Centric Efficiency</span>
 				</p>
 			</h1>
-			<h2 class="page-title">슈퍼관리자센터</h2>
-			<nav class="gnb">
+			<h2 class="page__title">슈퍼관리자센터</h2>
+			<nav class="admin-gnb">
 				<ul class="lst-gnb">
 					<li class="lst-gnb__title">
 						<p>메뉴</p>
 					</li>
 					<li class="lst-gnb__item on">
-						<a href="/menu/module" class="lst-gnb__link">모듈 등록</a>
-					</li>
-					<li class="lst-gnb__item">
-						<a href="/menu/program" class="lst-gnb__link">프로그램 등록</a>
+						<a href="/menu/menu" class="lst-gnb__link">메뉴 등록</a>
 					</li>
 					<li class="lst-gnb__item">
 						<a href="/menu/systemCode" class="lst-gnb__link">시스템 코드 등록</a>
