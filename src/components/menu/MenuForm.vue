@@ -77,6 +77,23 @@
 					</div>
 					<div class="component-box">
 						<div class="component-box-top">
+							<p class="component__title">순서 변경</p>
+						</div>
+						<div class="component-box-cnt">
+							<div class="buttons">
+								<button type="button" class="button button__move-top">
+									최상단으로 올리기
+								</button>
+								<button type="button" class="button button__move-up">
+									한칸 위로 올리기
+								</button>
+								<button type="button" class="button button__move-down">한칸 아래로 내리기</button>
+								<button type="button" class="button button__move-bottom">최하단으로 내리기</button>
+							</div>
+						</div>
+					</div>
+					<div class="component-box">
+						<div class="component-box-top">
 							<p class="component__title">사용여부</p>
 						</div>
 						<div class="component-box-cnt">
