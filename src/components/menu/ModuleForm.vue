@@ -299,7 +299,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			menuNm: '',
+		};
+	},
+};
 </script>
 
 <style></style>
