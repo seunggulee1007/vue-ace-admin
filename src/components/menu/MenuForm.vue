@@ -16,6 +16,7 @@
 					<h3 class="section__title">메뉴 등록</h3>
 				</div>
 				<div class="component-area">
+					<h5 class="content__title">거래처 등록</h5>
 					<div class="component-box">
 						<div class="component-box-top">
 							<p class="component__title">유형</p>
