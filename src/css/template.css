@@ -395,11 +395,13 @@ a.link{
 .tree-area{
 	font-size: 13px;
 	color: #666;
+	max-height: 84vh;
+	overflow-y: auto;
 }
 .tree .lst-tree__menu {
 	display: flex;
 	align-items: center;
-	padding: 8px 0;
+	padding-bottom: 8px;
 }
 .tree .lst-tree__menu .icon-folder-open{
 	display: flex;
@@ -423,9 +425,9 @@ a.link{
 	content: "";
 	position: absolute;
 	left: -7px;
-	top: -8px;
+	top: -2px;
 	width: 1px;
-	height: calc(100% - 8px);
+	height: 18px;
 	background-color: #e8e8e8;
 }
 .tree .lst-tree__item:after{
@@ -438,9 +440,7 @@ a.link{
 	background-color: #e8e8e8;
 }
 
-.tree .lst-tree__item .lst-tree__menu{
-	padding: 0;	
-}
+
 
 /* lst-cards */
 .lst-cards{
