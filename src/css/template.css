@@ -256,6 +256,10 @@
 	margin-top: 16px;
 }
 
+.component-box-wrap{
+	margin-top: 16px;
+}
+
 .component-box + .component-box{
 	margin-top: 32px;
 }

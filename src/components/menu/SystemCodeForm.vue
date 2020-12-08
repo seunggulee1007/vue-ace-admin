@@ -1,296 +1,263 @@
 <template>
 	<div class="container admin-container">
-		<section class="section__tree">
-			<h4 class="section__title">
-				<span>시스템 코드</span>
-			</h4>
-			<div class="tree-area">
-				<ul class="tree-container tree__module">
-					<li class="tree-item">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							영업CRM
-						</a>
-					</li>
-					<li class="tree-item on">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							유연근무
-						</a>
-						<ul class="tree-sub-container">
-							<li class="tree-item">
-								<a href="#" class="tree-item__link tree-item__no-icon">
-									<span class="icon-tree"></span>
-									유연근무유형
-								</a>
-							</li>
-							<li class="tree-item">
-								<a href="#" class="tree-item__link tree-item__no-icon">
-									<span class="icon-tree"></span>
-									근태관리
-								</a>
-							</li>
-							<li class="tree-item">
-								<a href="#" class="tree-item__link tree-item__no-icon">
-									<span class="icon-tree"></span>
-									승인처리
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="tree-item">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							비용정산
-						</a>
-					</li>
-					<li class="tree-item">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							WEB주문
-						</a>
-					</li>
-					<li class="tree-item">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							구매SCM
-						</a>
-					</li>
-					<li class="tree-item">
-						<a href="#" class="tree-item__link">
-							<span class="icon-tree"></span>
-							EIS
-						</a>
-					</li>
-				</ul>
+		<section class="section__list">
+			<div class="section-top">
+				<h4 class="section__title">시스템 코드 그룹</h4>
+			</div>
+			<div class="inner-wrap">
+				<div class="input-box">
+					<input class="input " type="text" placeholder="입력하세요" />
+					<button type="button" class="button">
+						<span class="icon icon-search"></span>
+						조회
+					</button>
+				</div>
+				<div class="table-wrap">
+					<vue-good-table
+						:columns="columns"
+						:rows="rows"
+						:fixed-header="true"
+						max-height="50vh"
+						styleClass="vgt-table"
+						:select-options="{ enable: true }"
+						@on-selected-rows-change="selectionChanged"
+						:pagination-options="{
+							enabled: true,
+							mode: 'records',
+							perPage: 5,
+							perPageDropdown: [5, 10],
+							position: 'bottom',
+							nextLabel: '다음',
+							prevLabel: '이전',
+							rowsPerPageLabel: '페이지당 줄 수',
+							ofLabel: '중',
+							allLabel: 'All',
+						}"
+					/>
+				</div>
+				<div class="component-box-wrap">
+					<div class="component-box">
+						<div class="component-box-top">
+							<p class="component__title">그룹 아이디</p>
+						</div>
+						<div class="component-box-cnt">
+							<div class="input-box">
+								<input class="input " type="text" placeholder="입력하세요" />
+							</div>
+						</div>
+					</div>
+					<div class="component-box">
+						<div class="component-box-top">
+							<p class="component__title">그룹명</p>
+						</div>
+						<div class="component-box-cnt">
+							<div class="input-box">
+								<input class="input " type="text" placeholder="입력하세요" />
+								<button type="button" class="button">
+									<span class="icon icon-check"></span>
+									중복확인
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="component-box">
+						<div class="component-box-top">
+							<p class="component__title">그룹 정보</p>
+						</div>
+						<div class="component-box-cnt">
+							<div class="input-box">
+								<input class="input " type="text" placeholder="입력하세요" />
+							</div>
+						</div>
+					</div>
+					<div class="component-box">
+						<div class="component-box-top">
+							<p class="component__title">사용여부</p>
+						</div>
+						<div class="component-box-cnt">
+							<ul class="radio-options">
+								<li class="radio-options__item">
+									<input
+										type="radio"
+										name="pageActive"
+										value="yes"
+										id="pageActiveY"
+										class="input input-radio"
+										checked
+									/>
+									<label for="pageActiveY">사용</label>
+								</li>
+								<li class="radio-options__item">
+									<input
+										type="radio"
+										name="pageActive"
+										value="no"
+										id="pageActiveN"
+										class="input input-radio"
+									/>
+									<label for="pageActiveN">미사용</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="buttons-complete">
+				<div class="buttons">
+					<button type="submit" class="button button__submit">저장</button>
+					<button type="button" class="button button__cancel">초기화</button>
+					<button type="button" class="button button__delete">삭제</button>
+				</div>
 			</div>
 		</section>
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section__title">시스템 코드 등록</h3>
-					<div class="buttons">
-						<button type="button" class="button button__add">
-							<span class="icon icon-add"></span>
-							상위코드 추가
-						</button>
+					<h4 class="section__title">시스템 코드 등록</h4>
+				</div>
+				<div class="component-area">
+					<div class="component-box component-box-top">
+						<strong class="content__title">선택된 그룹명</strong>
 						<button type="button" class="button button__delete">
-							<span class="icon icon-delete"></span>선택 삭제
+							<span class="icon icon-delete"></span>
+							선택 삭제
 						</button>
 					</div>
-				</div>
-				<div class="articles-wrap lst-cards lst-modules lst-depts">
-					<article class="article lst-module__item">
-						<div class="article-top">
-							<div class="input-box">
-								<span class="input-checkbox">
-									<input type="checkbox" id="checkboxCheck1" />
-									<label for="checkboxCheck1" class="input-checkbox__label icon-checkbox-purple">
-										<span class="content__title">유연근무</span>
-									</label>
-								</span>
+					<div class="table-wrap">
+						<vue-good-table
+							:columns="columns"
+							:rows="rows"
+							:fixed-header="true"
+							max-height="50vh"
+							styleClass="vgt-table"
+							:select-options="{ enable: true }"
+							@on-selected-rows-change="selectionChanged"
+							:pagination-options="{
+								enabled: true,
+								mode: 'records',
+								perPage: 10,
+								position: 'bottom',
+								nextLabel: '다음',
+								prevLabel: '이전',
+								rowsPerPageLabel: '페이지당 줄 수',
+								ofLabel: '중',
+								allLabel: 'All',
+							}"
+						/>
+					</div>
+					<div class="component-box-wrap">
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">그룹명</p>
 							</div>
-							<button type="button" class="button button__add">
-								<span class="icon icon-add"></span>
-								하위코드 추가
-							</button>
-						</div>
-						<div class="article-content">
-							<div class="table-wrap lst-card-sub">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelectAll1" />
-														<label
-															for="checkboxSelectAll1"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</th>
-											<th>코드명</th>
-											<th>내부코드</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect1-1" />
-														<label
-															for="checkboxSelect1-1"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>유연근무유형</td>
-											<td>20190101</td>
-										</tr>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect1-2" />
-														<label
-															for="checkboxSelect1-2"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>근태관리</td>
-											<td>20190201</td>
-										</tr>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect1-3" />
-														<label
-															for="checkboxSelect1-3"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>승인처리</td>
-											<td>20190301</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="component-box-cnt">
+								<div class="input-box">
+									<input class="input" type="text" placeholder="입력하세요" />
+								</div>
 							</div>
 						</div>
-					</article>
-					<article class="article lst-module__item">
-						<div class="article-top">
-							<div class="input-box">
-								<span class="input-checkbox">
-									<input type="checkbox" id="checkboxCheck2" />
-									<label for="checkboxCheck2" class="input-checkbox__label icon-checkbox-purple">
-										<span class="content__title">영업CRM</span>
-									</label>
-								</span>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">코드 아이디</p>
 							</div>
-							<button type="button" class="button button__add">
-								<span class="icon icon-add"></span>
-								하위코드 추가
-							</button>
-						</div>
-						<div class="article-content">
-							<div class="table-wrap lst-card-sub">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelectAll2" />
-														<label
-															for="checkboxSelectAll2"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</th>
-											<th>코드명</th>
-											<th>내부코드</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect2-1" />
-														<label
-															for="checkboxSelect2-1"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>거래처 등록</td>
-											<td>20190101</td>
-										</tr>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect2-2" />
-														<label
-															for="checkboxSelect2-2"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>거래처 조회</td>
-											<td>20190201</td>
-										</tr>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect2-3" />
-														<label
-															for="checkboxSelect2-3"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>영업기회 등록</td>
-											<td>20190301</td>
-										</tr>
-										<tr class="row">
-											<td class="column-check">
-												<div class="input-box">
-													<span class="input-checkbox">
-														<input type="checkbox" id="checkboxSelect2-4" />
-														<label
-															for="checkboxSelect2-4"
-															class="input-checkbox__label icon-checkbox-purple"
-														>
-															<span class="blind">선택</span>
-														</label>
-													</span>
-												</div>
-											</td>
-											<td>영업기회 현황</td>
-											<td>20190401</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="component-box-cnt">
+								<div class="input-box">
+									<input class="input " type="text" placeholder="입력하세요" />
+								</div>
 							</div>
 						</div>
-					</article>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">코드 정보</p>
+							</div>
+							<div class="component-box-cnt">
+								<div class="input-box">
+									<input class="input " type="text" placeholder="입력하세요" />
+								</div>
+							</div>
+						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">문자열</p>
+							</div>
+							<div class="input-box-wrap input-term">
+								<div class="input-box">
+									<input class="input" type="text" placeholder="입력하세요" />
+								</div>
+								<p>~</p>
+								<div class="input-box">
+									<input class="input" type="text" placeholder="입력하세요" />
+								</div>
+							</div>
+						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">정수형</p>
+							</div>
+							<div class="input-box-wrap input-term">
+								<div class="input-box">
+									<input class="input" type="text" placeholder="입력하세요" />
+								</div>
+								<p>~</p>
+								<div class="input-box">
+									<input class="input" type="text" placeholder="입력하세요" />
+								</div>
+							</div>
+						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">순서 변경</p>
+							</div>
+							<div class="component-box-cnt">
+								<div class="buttons">
+									<button type="button" class="button button__move-top">
+										최상단으로 올리기
+									</button>
+									<button type="button" class="button button__move-up">
+										한칸 위로 올리기
+									</button>
+									<button type="button" class="button button__move-down">한칸 아래로 내리기</button>
+									<button type="button" class="button button__move-bottom">최하단으로 내리기</button>
+								</div>
+							</div>
+						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">사용여부</p>
+							</div>
+							<div class="component-box-cnt">
+								<ul class="radio-options">
+									<li class="radio-options__item">
+										<input
+											type="radio"
+											name="pageActive"
+											value="yes"
+											id="pageActiveY"
+											class="input input-radio"
+											checked
+										/>
+										<label for="pageActiveY">사용</label>
+									</li>
+									<li class="radio-options__item">
+										<input
+											type="radio"
+											name="pageActive"
+											value="no"
+											id="pageActiveN"
+											class="input input-radio"
+										/>
+										<label for="pageActiveN">미사용</label>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="buttons-complete">
 					<div class="buttons">
-						<button type="submit" class="button button__save">저장</button>
-						<button type="button" class="button button__cancel">취소</button>
-						<button type="button" class="button button__temp-save">임시저장</button>
+						<button type="submit" class="button button__submit">저장</button>
+						<button type="button" class="button button__cancel">초기화</button>
+						<button type="button" class="button button__delete">삭제</button>
 					</div>
 				</div>
 			</div>
@@ -299,7 +266,60 @@
 </template>
 
 <script>
-export default {};
+import 'vue-good-table/dist/vue-good-table.css';
+import { VueGoodTable } from 'vue-good-table';
+export default {
+	data: function() {
+		return {
+			columns: [
+				{
+					label: 'No.',
+					field: 'num',
+				},
+				{
+					label: '그룹 아이디',
+					field: 'groupId',
+				},
+				{
+					label: '그룹 정보',
+					field: 'groupInfo',
+				},
+				{
+					label: '사용여부',
+					field: 'active',
+				},
+			],
+			rows: [
+				{
+					num: '1',
+					groupId: '그룹아이디1',
+					groupInfo: '그룹명1',
+					active: '사용',
+				},
+				{
+					num: '2',
+					groupId: '그룹아이디2',
+					groupInfo: '그룹명2',
+					active: '사용',
+				},
+				{
+					num: '3',
+					groupId: '그룹아이디3',
+					groupInfo: '그룹명3',
+					active: '미사용',
+				},
+			],
+		};
+	},
+	components: {
+		VueGoodTable,
+	},
+	metohds: {
+		selectionChanged() {
+			// params.selectedRows - all rows that are selected (this page)
+		},
+	},
+};
 </script>
 
 <style></style>
