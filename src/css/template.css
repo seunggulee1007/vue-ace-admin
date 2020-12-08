@@ -316,7 +316,7 @@
 }
 .content__title{
 	display: block;
-	font-size: 1.2em !important;
+	font-size: 1.3em !important;
 	margin-bottom: 24px;
 	font-weight: 700;
 }
@@ -326,6 +326,10 @@
 	margin-left: 16px;
 	padding-left: 16px;
 }
+.component-box-top .content__title{
+	margin-bottom: 0;
+}
+
 .component__title{
 	color: #67707c;
 	font-weight: 700;
