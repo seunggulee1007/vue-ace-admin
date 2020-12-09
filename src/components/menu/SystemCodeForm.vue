@@ -6,21 +6,24 @@
 			</div>
 			<div class="inner-wrap">
 				<div class="input-box">
-					<input class="input " type="text" placeholder="입력하세요" />
-					<button type="button" class="button">
+					<input class="input" type="text" v-model="searchTerm" placeholder="입력하세요" />
+					<button type="button" class="button" @click="rows = []">
 						<span class="icon icon-search"></span>
 						조회
 					</button>
 				</div>
 				<div class="table-wrap">
 					<vue-good-table
-						:columns="columns"
-						:rows="rows"
-						:fixed-header="true"
-						max-height="50vh"
 						styleClass="vgt-table"
-						:select-options="{ enable: true }"
-						@on-selected-rows-change="selectionChanged"
+						max-height="50vh"
+						:columns="columns1"
+						:rows="rows1"
+						:line-numbers="true"
+						:select-options="{ enabled: true }"
+						:search-options="{
+							enabled: true,
+							externalQuery: searchTerm,
+						}"
 						:pagination-options="{
 							enabled: true,
 							mode: 'records',
@@ -116,22 +119,21 @@
 					<h4 class="section__title">시스템 코드 등록</h4>
 				</div>
 				<div class="component-area">
-					<div class="component-box component-box-top">
+					<div class="component-box-top">
 						<strong class="content__title">선택된 그룹명</strong>
-						<button type="button" class="button button__delete">
-							<span class="icon icon-delete"></span>
-							선택 삭제
-						</button>
 					</div>
 					<div class="table-wrap">
 						<vue-good-table
-							:columns="columns"
-							:rows="rows"
-							:fixed-header="true"
-							max-height="50vh"
 							styleClass="vgt-table"
-							:select-options="{ enable: true }"
-							@on-selected-rows-change="selectionChanged"
+							:columns="columns2"
+							:rows="rows2"
+							:line-numbers="true"
+							:select-options="{
+								enabled: true,
+								selectionText: '선택되었습니다',
+								clearSelectionText: '선택해제하기',
+								selectAllByGroup: true,
+							}"
 							:pagination-options="{
 								enabled: true,
 								mode: 'records',
@@ -143,7 +145,14 @@
 								ofLabel: '중',
 								allLabel: 'All',
 							}"
-						/>
+						>
+							<div slot="selected-row-actions">
+								<button type="button" class="button button__delete">
+									<span class="icon icon-delete"></span>
+									선택 삭제
+								</button>
+							</div>
+						</vue-good-table>
 					</div>
 					<div class="component-box-wrap">
 						<div class="component-box">
@@ -271,14 +280,15 @@ import { VueGoodTable } from 'vue-good-table';
 export default {
 	data: function() {
 		return {
-			columns: [
-				{
-					label: 'No.',
-					field: 'num',
-				},
+			searchTerm: '',
+			columns1: [
 				{
 					label: '그룹 아이디',
 					field: 'groupId',
+				},
+				{
+					label: '그룹명',
+					field: 'groupName',
 				},
 				{
 					label: '그룹 정보',
@@ -289,23 +299,115 @@ export default {
 					field: 'active',
 				},
 			],
-			rows: [
+			rows1: [
 				{
-					num: '1',
 					groupId: '그룹아이디1',
-					groupInfo: '그룹명1',
+					groupName: '그룹명1',
+					groupInfo: '그룹정보1',
 					active: '사용',
 				},
 				{
-					num: '2',
 					groupId: '그룹아이디2',
-					groupInfo: '그룹명2',
+					groupName: '그룹명2',
+					groupInfo: '그룹정보2',
 					active: '사용',
 				},
 				{
-					num: '3',
 					groupId: '그룹아이디3',
-					groupInfo: '그룹명3',
+					groupName: '그룹명3',
+					groupInfo: '그룹정보3',
+					active: '미사용',
+				},
+				{
+					groupId: '그룹아이디4',
+					groupName: '그룹명4',
+					groupInfo: '그룹정보4',
+					active: '사용',
+				},
+				{
+					groupId: '그룹아이디5',
+					groupName: '그룹명5',
+					groupInfo: '그룹정보5',
+					active: '미사용',
+				},
+			],
+			columns2: [
+				{
+					label: '그룹명',
+					field: 'groupName',
+				},
+				{
+					label: '코드명',
+					field: 'codeName',
+				},
+				{
+					label: '코드정보',
+					field: 'codeInfo',
+				},
+				{
+					label: '사용여부',
+					field: 'active',
+				},
+			],
+			rows2: [
+				{
+					groupName: '그룹명1',
+					codeName: '코드명1',
+					codeInfo: '코드정보1',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명2',
+					codeName: '코드명2',
+					codeInfo: '코드정보2',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명3',
+					codeName: '코드명3',
+					codeInfo: '코드정보3',
+					active: '미사용',
+				},
+				{
+					groupName: '그룹명4',
+					codeName: '코드명4',
+					codeInfo: '코드정보4',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명5',
+					codeName: '코드명5',
+					codeInfo: '코드정보5',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명6',
+					codeName: '코드명6',
+					codeInfo: '코드정보6',
+					active: '미사용',
+				},
+				{
+					groupName: '그룹명7',
+					codeName: '코드명7',
+					codeInfo: '코드정보7',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명8',
+					codeName: '코드명8',
+					codeInfo: '코드정보8',
+					active: '사용',
+				},
+				{
+					groupName: '그룹명9',
+					codeName: '코드명9',
+					codeInfo: '코드정보9',
+					active: '미사용',
+				},
+				{
+					groupName: '그룹명10',
+					codeName: '코드명10',
+					codeInfo: '코드정보10',
 					active: '미사용',
 				},
 			],
@@ -313,11 +415,6 @@ export default {
 	},
 	components: {
 		VueGoodTable,
-	},
-	metohds: {
-		selectionChanged() {
-			// params.selectedRows - all rows that are selected (this page)
-		},
 	},
 };
 </script>
