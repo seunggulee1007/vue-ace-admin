@@ -34,14 +34,17 @@ function doAxios(url, method, params, config) {
 				console.log('error.response');
 				res = error.response.data;
 				res.status = error.response.status;
+				if (error.response.status == 401) {
+					console.log('401 아니야 ?');
+					// 인증 오류라면 메인 페이지로
+					// 쿠키에서 인증정보 삭제 후
+					store.commit('clearLoginInfo');
+					deleteCookie(process.env.VUE_APP_AUTH_TOKEN);
+					router.push('/login');
+				}
 			} else if (!error.status) {
 				console.log('status');
 				res.resultMsg = '네트워크 연결을 확인해 주세요';
-			} else if (error.response.status == 401) {
-				// 인증 오류라면 메인 페이지로
-				// 쿠키에서 인증정보 삭제 후
-				deleteCookie(process.env.VUE_APP_AUTH_TOKEN);
-				router.push('/');
 			} else {
 				console.log('else');
 				res.data.resultMsg = error.message;

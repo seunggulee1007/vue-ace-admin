@@ -2,11 +2,11 @@
 	<li>
 		<div @click="toggle" :class="{ 'lst-tree__menu': isFolder }">
 			<span v-if="isFolder" class="icon-folder-open">{{ isOpen ? '-' : '+' }}</span>
-			<span @click="clickDept(item)">{{ item.name }}</span>
+			<span @click="clickMenu(item)">{{ item.name }}</span>
 		</div>
 		<ul class="lst-tree__sub" v-show="isOpen" v-if="isFolder" style="padding-left: 1em;">
 			<tree-item
-				class="lst-tree__item"
+				class="lst-tree__item cursor_hand"
 				v-for="(children, index) in item.children"
 				:key="index"
 				:item="children"
@@ -36,7 +36,7 @@ export default {
 		/**********************************************
 		 * @method : toggle
 		 * @note 트리 구조 접고 펴는 함수
-		 * @author : es-seungglee
+		 * @author : seunggu
 		 ***********************************************/
 		toggle() {
 			if (this.isFolder) {
@@ -44,15 +44,22 @@ export default {
 			}
 		},
 		/**********************************************
-		 * @method : getDeptList
-		 * @note 부서 목록 조회
-		 * @author : es-seungglee
+		 * @method : clickMenu
+		 * @note 메뉴 클릭
+		 * @author : seunggu
 		 ***********************************************/
-		async clickDept(data) {
-			console.log(data);
+		async clickMenu(data) {
+			if (data.menuId == 0) {
+				return;
+			}
+			console.log('dddd');
 		},
 	},
 };
 </script>
 
-<style></style>
+<style scoped>
+.cursor_hand {
+	cursor: pointer;
+}
+</style>

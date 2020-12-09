@@ -2,31 +2,30 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
-// sweetAlert2
-import VueSweetalert2 from 'vue-sweetalert2';
 
-// sweettAlert2 options
-const options = {
-	confirmButtonColor: '#41b882',
-	cancelButtonColor: '#ff7674',
-};
+import VueDaumPostcode from 'vue-daum-postcode';
+import 'v-slim-dialog/dist/v-slim-dialog.css';
+import SlimDialog from 'v-slim-dialog';
 
-Vue.use(VueSweetalert2, options);
+Vue.use(SlimDialog);
+Vue.use(VueDaumPostcode);
 
 Vue.mixin({
 	methods: {
 		// 전역 알림 창
-		sAlert(text, title, confirmButtonText) {
+		sAlert(text, title, okLabel) {
 			title = title ? title : '알림';
 
 			text = text ? text : '';
-			confirmButtonText = confirmButtonText ? confirmButtonText : '확인';
+			okLabel = okLabel ? okLabel : '확인';
 
-			this.$swal({
-				title,
-				text,
-				confirmButtonText,
-				icon: 'info',
+			/**
+			 * @param String message
+			 * @param Object options default { title, okLabel = 'OK', size }
+			 */
+			const options = { title: title, size: 'sm', okLabel: okLabel };
+			this.$dialogs.alert(text, options).then(res => {
+				console.log(res); // {ok: true|false|undefined}
 			});
 		},
 		// 전역 경고창

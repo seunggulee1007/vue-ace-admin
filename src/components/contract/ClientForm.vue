@@ -12,17 +12,24 @@
 								<p class="component__title">거래처명</p>
 							</div>
 							<div class="input-box">
-								<input class="input " type="text" placeholder="입력하세요" />
-								<button type="button" class="button">중복확인</button>
+								<input
+									class="input "
+									type="text"
+									placeholder="입력하세요"
+									v-model="clientNm"
+									maxlength="150"
+									ref="clientNm"
+								/>
+								<button type="button" class="button" @click="confirmDuple">중복확인</button>
 							</div>
-							<p class="msg-state">중복입니다</p>
+							<p class="msg-state" v-if="!idDupleResult">{{ idDupleResultMsg }}</p>
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
 								<p class="component__title">거래처 종류</p>
 							</div>
 							<div class="input-box">
-								<select name="" id="" class="input-select">
+								<select class="input-select" v-model="clientKind" ref="clientKind">
 									<option value="" selected>선택하세요</option>
 									<option value="">1</option>
 									<option value="">2</option>
@@ -35,17 +42,31 @@
 								<p class="component__title">사업자번호</p>
 							</div>
 							<div class="input-box">
-								<input class="input " type="text" placeholder="하이픈(-) 없이 입력하세요" />
-								<button type="button" class="button">휴/폐업 조회</button>
+								<input
+									class="input "
+									type="text"
+									placeholder="하이픈(-) 없이 입력하세요"
+									v-model="bizNo"
+									maxlength="10"
+									ref="bizNo"
+								/>
+								<button type="button" class="button" @click="searchBizInfo">휴/폐업 조회</button>
 							</div>
-							<p class="msg-state">부가가치세 일반과세자</p>
+							<p class="msg-state">{{ bizResultMsg }}</p>
 						</div>
 						<div class="item item__input">
 							<div class="item-top">
 								<p class="component__title">대표자명</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="ceoNm"
+									maxlength="30"
+									ref="ceoNm"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -53,7 +74,14 @@
 								<p class="component__title">법인등록번호</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="coRegNo"
+									ref="coRegNo"
+									maxlength="13"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -61,7 +89,14 @@
 								<p class="component__title">업태</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="bizCond"
+									ref="bizCond"
+									maxlength="150"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -69,7 +104,14 @@
 								<p class="component__title">업종</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="bizKind"
+									ref="bizKind"
+									maxlength="150"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -78,15 +120,25 @@
 							</div>
 							<div class="input-box">
 								<input class="input" type="text" readonly />
-								<button type="button" class="button">주소 검색</button>
+								<button type="button" class="button" @click="openPostData()">주소 검색</button>
 							</div>
 						</div>
+						<div v-if="openPostFlag">
+							<vue-daum-postcode @complete="getPostData($event)" />
+						</div>
+
 						<div class="item item__input">
 							<div class="item-top">
 								<p class="component__title">대표 전화번호</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="telNo"
+									maxlength="11"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -94,7 +146,13 @@
 								<p class="component__title">담당자</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="manager"
+									maxlength="15"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -102,7 +160,13 @@
 								<p class="component__title">휴대전화</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									maxlength="11"
+									v-model="phone"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -110,7 +174,13 @@
 								<p class="component__title">E-Mail</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="email"
+									maxlength="50"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -118,7 +188,13 @@
 								<p class="component__title">계약금액</p>
 							</div>
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									maxlength="9"
+									v-model="contractAmt"
+								/>
 							</div>
 						</div>
 						<div class="item item__input">
@@ -157,7 +233,58 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			idDupleResult: false, // 아이디 중복 체크 여부
+			idDupleResultMsg: '거래처명 중복 체크를 해 주세요.',
+			clientNm: '',
+			clientKind: '',
+			bizNo: '',
+			bizResultMsg: '',
+			bizResultEngMsg: '',
+			bizResult: '',
+			ceoNm: '',
+			coRegNo: '',
+			bizCond: '',
+			bizKind: '',
+			postNo: '',
+			addr: '',
+			addrEng: '',
+			addrType: '',
+			addrDetail: '',
+			buildingCd: '',
+			buildingNm: '',
+			sido: '',
+			sigungu: '',
+			sigunguCd: '',
+			telNo: '',
+			manager: '',
+			phone: '',
+			contractAmt: 0,
+			email: '',
+			openPostFlag: false,
+		};
+	},
+	methods: {
+		getPostData(data) {
+			console.log(data);
+			this.openPostFlag = false;
+		},
+		openPostData() {
+			this.openPostFlag = true;
+		},
+		searchBizInfo() {},
+		// 아이디 중복 체크
+		confirmDuple() {
+			if (!this.clientNm) {
+				this.sAlert('거래처 명을 입력해 주세요');
+				this.$refs.clientNm.focus();
+				return;
+			}
+		},
+	},
+};
 </script>
 
 <style></style>
