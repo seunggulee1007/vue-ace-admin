@@ -49,6 +49,11 @@
 	font-weight: 400;
 }
 
+.table-wrap .vgt-table tbody tr:last-child .line-numbers,
+.table-wrap .vgt-table tbody tr:last-child .vgt-checkbox-col{
+	border-bottom: 1px solid #dcdfe6;
+}
+
 .table-wrap .vgt-wrap__footer {
 	padding: .75em;
 	color: #67707c;
