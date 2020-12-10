@@ -13,30 +13,40 @@
 					</button>
 				</div>
 				<div class="table-wrap">
-					<vue-good-table
-						styleClass="vgt-table"
-						max-height="50vh"
-						:columns="columns1"
-						:rows="rows1"
-						:line-numbers="true"
-						:select-options="{ enabled: true }"
-						:search-options="{
-							enabled: true,
-							externalQuery: searchTerm,
-						}"
-						:pagination-options="{
-							enabled: true,
-							mode: 'records',
-							perPage: 5,
-							perPageDropdown: [5, 10],
-							position: 'bottom',
-							nextLabel: '다음',
-							prevLabel: '이전',
-							rowsPerPageLabel: '페이지당 줄 수',
-							ofLabel: '중',
-							allLabel: 'All',
-						}"
-					/>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>그룹 아이디</th>
+								<th>그룹명</th>
+								<th>그룹 정보</th>
+								<th>사용여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="row">
+								<td>1</td>
+								<td>그룹아이디1</td>
+								<td>그룹명1</td>
+								<td>그룹정보1</td>
+								<td>사용</td>
+							</tr>
+							<tr class="row">
+								<td>2</td>
+								<td>그룹아이디2</td>
+								<td>그룹명2</td>
+								<td>그룹정보2</td>
+								<td>사용</td>
+							</tr>
+							<tr class="row">
+								<td>3</td>
+								<td>그룹아이디3</td>
+								<td>그룹명3</td>
+								<td>그룹정보3</td>
+								<td>미사용</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="component-box-wrap">
 					<div class="component-box">
@@ -123,36 +133,80 @@
 						<strong class="content__title">선택된 그룹명</strong>
 					</div>
 					<div class="table-wrap">
-						<vue-good-table
-							styleClass="vgt-table"
-							:columns="columns2"
-							:rows="rows2"
-							:line-numbers="true"
-							:select-options="{
-								enabled: true,
-								selectionText: '선택되었습니다',
-								clearSelectionText: '선택해제하기',
-								selectAllByGroup: true,
-							}"
-							:pagination-options="{
-								enabled: true,
-								mode: 'records',
-								perPage: 10,
-								position: 'bottom',
-								nextLabel: '다음',
-								prevLabel: '이전',
-								rowsPerPageLabel: '페이지당 줄 수',
-								ofLabel: '중',
-								allLabel: 'All',
-							}"
-						>
-							<div slot="selected-row-actions">
-								<button type="button" class="button button__delete">
-									<span class="icon icon-delete"></span>
-									선택 삭제
-								</button>
-							</div>
-						</vue-good-table>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										<div class="input-box">
+											<span class="input-checkbox">
+												<input type="checkbox" id="checkboxSelectAll1" />
+												<label for="checkboxAll1" class="input-checkbox__label">
+													<span class="blind">선택</span>
+												</label>
+											</span>
+										</div>
+									</th>
+									<th>No.</th>
+									<th>그룹명</th>
+									<th>코드명</th>
+									<th>코드 정보</th>
+									<th>사용여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="row">
+									<td class="column-check">
+										<div class="input-box">
+											<span class="input-checkbox">
+												<input type="checkbox" id="checkboxSelect1-1" />
+												<label for="checkboxSelect1-1" class="input-checkbox__label">
+													<span class="blind">선택</span>
+												</label>
+											</span>
+										</div>
+									</td>
+									<td>1</td>
+									<td>그룹명1</td>
+									<td>코드명1</td>
+									<td>코드정보1</td>
+									<td>사용</td>
+								</tr>
+								<tr class="row">
+									<td class="column-check">
+										<div class="input-box">
+											<span class="input-checkbox">
+												<input type="checkbox" id="checkboxSelect1-2" />
+												<label for="checkboxSelect1-2"	class="input-checkbox__label">
+													<span class="blind">선택</span>
+												</label>
+											</span>
+										</div>
+									</td>
+									<td>2</td>
+									<td>그룹명2</td>
+									<td>코드명2</td>
+									<td>코드정보2</td>
+									<td>사용</td>
+								</tr>
+								<tr class="row">
+									<td class="column-check">
+										<div class="input-box">
+											<span class="input-checkbox">
+												<input type="checkbox" id="checkboxSelect1-3" />
+												<label for="checkboxSelect1-3" class="input-checkbox__label">
+													<span class="blind">선택</span>
+												</label>
+											</span>
+										</div>
+									</td>
+									<td>3</td>
+									<td>그룹명3</td>
+									<td>코드명3</td>
+									<td>코드정보3</td>
+									<td>미사용</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="component-box-wrap">
 						<div class="component-box">
@@ -185,31 +239,113 @@
 								</div>
 							</div>
 						</div>
-						<div class="component-box">
-							<div class="component-box-top">
-								<p class="component__title">문자열</p>
-							</div>
-							<div class="input-box-wrap input-term">
-								<div class="input-box">
-									<input class="input" type="text" placeholder="입력하세요" />
+						<div class="flex-box">
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">문자열 1</p>
 								</div>
-								<p>~</p>
-								<div class="input-box">
-									<input class="input" type="text" placeholder="입력하세요" />
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">정수형 1</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="component-box">
-							<div class="component-box-top">
-								<p class="component__title">정수형</p>
-							</div>
-							<div class="input-box-wrap input-term">
-								<div class="input-box">
-									<input class="input" type="text" placeholder="입력하세요" />
+						<div class="flex-box">
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">문자열 2</p>
 								</div>
-								<p>~</p>
-								<div class="input-box">
-									<input class="input" type="text" placeholder="입력하세요" />
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">정수형 2</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-box">
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">문자열 3</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">정수형 3</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-box">
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">문자열 4</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">정수형 4</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex-box">
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">문자열 5</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
+								</div>
+							</div>
+							<div class="component-box">
+								<div class="component-box-top">
+									<p class="component__title">정수형 5</p>
+								</div>
+								<div class="component-box-cnt">
+									<div class="input-box">
+										<input class="input " type="text" placeholder="입력하세요" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -275,146 +411,9 @@
 </template>
 
 <script>
-import 'vue-good-table/dist/vue-good-table.css';
-import { VueGoodTable } from 'vue-good-table';
 export default {
 	data: function() {
-		return {
-			searchTerm: '',
-			columns1: [
-				{
-					label: '그룹 아이디',
-					field: 'groupId',
-				},
-				{
-					label: '그룹명',
-					field: 'groupName',
-				},
-				{
-					label: '그룹 정보',
-					field: 'groupInfo',
-				},
-				{
-					label: '사용여부',
-					field: 'active',
-				},
-			],
-			rows1: [
-				{
-					groupId: '그룹아이디1',
-					groupName: '그룹명1',
-					groupInfo: '그룹정보1',
-					active: '사용',
-				},
-				{
-					groupId: '그룹아이디2',
-					groupName: '그룹명2',
-					groupInfo: '그룹정보2',
-					active: '사용',
-				},
-				{
-					groupId: '그룹아이디3',
-					groupName: '그룹명3',
-					groupInfo: '그룹정보3',
-					active: '미사용',
-				},
-				{
-					groupId: '그룹아이디4',
-					groupName: '그룹명4',
-					groupInfo: '그룹정보4',
-					active: '사용',
-				},
-				{
-					groupId: '그룹아이디5',
-					groupName: '그룹명5',
-					groupInfo: '그룹정보5',
-					active: '미사용',
-				},
-			],
-			columns2: [
-				{
-					label: '그룹명',
-					field: 'groupName',
-				},
-				{
-					label: '코드명',
-					field: 'codeName',
-				},
-				{
-					label: '코드정보',
-					field: 'codeInfo',
-				},
-				{
-					label: '사용여부',
-					field: 'active',
-				},
-			],
-			rows2: [
-				{
-					groupName: '그룹명1',
-					codeName: '코드명1',
-					codeInfo: '코드정보1',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명2',
-					codeName: '코드명2',
-					codeInfo: '코드정보2',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명3',
-					codeName: '코드명3',
-					codeInfo: '코드정보3',
-					active: '미사용',
-				},
-				{
-					groupName: '그룹명4',
-					codeName: '코드명4',
-					codeInfo: '코드정보4',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명5',
-					codeName: '코드명5',
-					codeInfo: '코드정보5',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명6',
-					codeName: '코드명6',
-					codeInfo: '코드정보6',
-					active: '미사용',
-				},
-				{
-					groupName: '그룹명7',
-					codeName: '코드명7',
-					codeInfo: '코드정보7',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명8',
-					codeName: '코드명8',
-					codeInfo: '코드정보8',
-					active: '사용',
-				},
-				{
-					groupName: '그룹명9',
-					codeName: '코드명9',
-					codeInfo: '코드정보9',
-					active: '미사용',
-				},
-				{
-					groupName: '그룹명10',
-					codeName: '코드명10',
-					codeInfo: '코드정보10',
-					active: '미사용',
-				},
-			],
-		};
-	},
-	components: {
-		VueGoodTable,
+		return {};
 	},
 };
 </script>

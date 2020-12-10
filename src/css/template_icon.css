@@ -109,7 +109,7 @@ input[type='checkbox']:checked + .icon-checkbox-blue:before{
 	background-image: url("../images/sprites_icons.png");
 	background-position: -70px 0;
 }
-input[type='checkbox']:checked + .icon-checkbox-purple:before{
+input[type='checkbox']:checked + .input-checkbox__label:before{
 	background-position: -98px 0;
 }
 
