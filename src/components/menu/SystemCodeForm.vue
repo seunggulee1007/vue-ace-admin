@@ -5,12 +5,19 @@
 				<h4 class="section__title">시스템 코드 그룹</h4>
 			</div>
 			<div class="inner-wrap">
-				<div class="input-box">
-					<input class="input" type="text" v-model="searchTerm" placeholder="입력하세요" />
-					<button type="button" class="button" @click="rows = []">
-						<span class="icon icon-search"></span>
-						조회
-					</button>
+				<div class="component-box component-box-top">
+					<select>
+						<option value="groupId">그룹 아이디</option>
+						<option value="groupName">그룹명</option>
+						<option value="groupInfo">그룹 정보</option>
+					</select>
+					<div class="input-box">
+						<input class="input" type="text" v-model="searchTerm" placeholder="입력하세요" />
+						<button type="button" class="button" @click="rows = []">
+							<span class="icon icon-search"></span>
+							조회
+						</button>
+					</div>
 				</div>
 				<div class="table-wrap">
 					<table class="table">
