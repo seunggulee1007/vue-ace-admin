@@ -1,8 +1,7 @@
 <template>
 	<section class="container login-container">
-		<section class="article section__login">
+		<section class="component-area section__login">
 			<h1 class="logo logo-rec">
-				<!-- <img src="images/logo-login.png" alt="ACE Business Portal"> -->
 				<p class="mark">
 					<span>A</span>
 				</p>

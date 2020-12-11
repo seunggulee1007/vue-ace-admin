@@ -156,6 +156,9 @@
 	right: 36px;
 	top: 36px;
 }
+.popup .button__close .icon-close{
+	margin-right: 0;
+}
 
 /* common class */
 .blind {
@@ -328,16 +331,6 @@
 
 .component__search .result-search{
 	margin-left: 16px;
-}
-
-
-/* login common */
-.login-container{
-	display: flex;
-	align-items:center;
-	justify-content: center;
-	flex-grow: 1;
-	height: 100vh;
 }
 
 
@@ -622,6 +615,9 @@ a.link{
 }
 .input-box > * + *{
 	margin-left: 16px;
+}
+.input-box-icon .icon + .input{
+	margin-left: 0;
 }
 
 .input-box.input-box-icon{
