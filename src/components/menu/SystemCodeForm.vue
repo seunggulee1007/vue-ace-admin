@@ -6,13 +6,12 @@
 			</div>
 			<div class="inner-wrap">
 				<div class="component-box component-box-top">
-					<select>
-						<option value="groupId">그룹 아이디</option>
-						<option value="groupName">그룹명</option>
-						<option value="groupInfo">그룹 정보</option>
+					<select v-model="pagingVO.searchKind">
+						<option value="1">그룹명</option>
+						<option value="2">그룹 정보</option>
 					</select>
 					<div class="input-box">
-						<input class="input" type="text" v-model="searchTerm" placeholder="입력하세요" />
+						<input class="input" type="text" v-model="pagingVO.searchKeyword" placeholder="입력하세요" />
 						<button type="button" class="button" @click="rows = []">
 							<span class="icon icon-search"></span>
 							조회
@@ -31,26 +30,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="row">
-								<td>1</td>
-								<td>그룹아이디1</td>
-								<td>그룹명1</td>
-								<td>그룹정보1</td>
-								<td>사용</td>
-							</tr>
-							<tr class="row">
-								<td>2</td>
-								<td>그룹아이디2</td>
-								<td>그룹명2</td>
-								<td>그룹정보2</td>
-								<td>사용</td>
-							</tr>
-							<tr class="row">
-								<td>3</td>
-								<td>그룹아이디3</td>
-								<td>그룹명3</td>
-								<td>그룹정보3</td>
-								<td>미사용</td>
+							<tr
+								class="row"
+								v-for="(item, idx) in codeMasterList"
+								:key="item.codeMasterId"
+								@click="choiceCodeMaster(item)"
+							>
+								<td>{{ idx + 1 }}</td>
+								<td>{{ item.codeMasterId }}</td>
+								<td>{{ item.codeMasterNm }}</td>
+								<td>{{ item.codeMasterInfo }}</td>
+								<td>{{ item.useYn == 'Y' ? '사용' : '미사용' }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -62,7 +52,7 @@
 						</div>
 						<div class="component-box-cnt">
 							<div class="input-box">
-								<input class="input " type="text" placeholder="입력하세요" />
+								<input class="input " type="text" readonly v-model="codeMasterVO.codeMasterId" />
 							</div>
 						</div>
 					</div>
@@ -72,7 +62,13 @@
 						</div>
 						<div class="component-box-cnt">
 							<div class="input-box">
-								<input class="input " type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="codeMasterVO.codeMasterNm"
+									ref="codeMasterNm"
+								/>
 								<button type="button" class="button">
 									<span class="icon icon-check"></span>
 									중복확인
@@ -86,7 +82,13 @@
 						</div>
 						<div class="component-box-cnt">
 							<div class="input-box">
-								<input class="input " type="text" placeholder="입력하세요" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="codeMasterVO.codeMasterInfo"
+									ref="codeMasterInfo"
+								/>
 							</div>
 						</div>
 					</div>
@@ -99,21 +101,20 @@
 								<li class="radio-options__item">
 									<input
 										type="radio"
-										name="pageActive"
-										value="yes"
+										value="Y"
 										id="pageActiveY"
 										class="input input-radio"
-										checked
+										v-model="codeMasterVO.useYn"
 									/>
 									<label for="pageActiveY">사용</label>
 								</li>
 								<li class="radio-options__item">
 									<input
 										type="radio"
-										name="pageActive"
-										value="no"
+										value="N"
 										id="pageActiveN"
 										class="input input-radio"
+										v-model="codeMasterVO.useYn"
 									/>
 									<label for="pageActiveN">미사용</label>
 								</li>
@@ -124,9 +125,9 @@
 			</div>
 			<div class="buttons-complete">
 				<div class="buttons">
-					<button type="submit" class="button button__submit">저장</button>
-					<button type="button" class="button button__cancel">초기화</button>
-					<button type="button" class="button button__delete">삭제</button>
+					<button type="submit" class="button button__submit" @click="saveMaster">저장</button>
+					<button type="button" class="button button__cancel" @click="initMaster">초기화</button>
+					<button type="button" class="button button__delete" @click="deleteMaster">삭제</button>
 				</div>
 			</div>
 		</section>
@@ -136,27 +137,13 @@
 					<h4 class="section__title">시스템 코드 등록</h4>
 				</div>
 				<div class="component-area">
-					<div class="component-box component-box-top">
-						<strong class="content__title">선택된 그룹명</strong>
-						<button type="button" class="button button__delete">
-							<span class="icon icon-delete"></span>
-							선택삭제
-						</button>
+					<div class="component-box-top">
+						<strong class="content__title">{{ codeMasterNm }}</strong>
 					</div>
 					<div class="table-wrap">
 						<table class="table">
 							<thead>
 								<tr>
-									<th>
-										<div class="input-box">
-											<span class="input-checkbox">
-												<input type="checkbox" id="checkboxSelectAll1" />
-												<label for="checkboxAll1" class="input-checkbox__label">
-													<span class="blind">선택</span>
-												</label>
-											</span>
-										</div>
-									</th>
 									<th>No.</th>
 									<th>그룹명</th>
 									<th>코드명</th>
@@ -165,56 +152,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="row">
-									<td class="column-check">
-										<div class="input-box">
-											<span class="input-checkbox">
-												<input type="checkbox" id="checkboxSelect1-1" />
-												<label for="checkboxSelect1-1" class="input-checkbox__label">
-													<span class="blind">선택</span>
-												</label>
-											</span>
-										</div>
-									</td>
-									<td>1</td>
-									<td>그룹명1</td>
-									<td>코드명1</td>
-									<td>코드정보1</td>
-									<td>사용</td>
-								</tr>
-								<tr class="row">
-									<td class="column-check">
-										<div class="input-box">
-											<span class="input-checkbox">
-												<input type="checkbox" id="checkboxSelect1-2" />
-												<label for="checkboxSelect1-2" class="input-checkbox__label">
-													<span class="blind">선택</span>
-												</label>
-											</span>
-										</div>
-									</td>
-									<td>2</td>
-									<td>그룹명2</td>
-									<td>코드명2</td>
-									<td>코드정보2</td>
-									<td>사용</td>
-								</tr>
-								<tr class="row">
-									<td class="column-check">
-										<div class="input-box">
-											<span class="input-checkbox">
-												<input type="checkbox" id="checkboxSelect1-3" />
-												<label for="checkboxSelect1-3" class="input-checkbox__label">
-													<span class="blind">선택</span>
-												</label>
-											</span>
-										</div>
-									</td>
-									<td>3</td>
-									<td>그룹명3</td>
-									<td>코드명3</td>
-									<td>코드정보3</td>
-									<td>미사용</td>
+								<tr
+									class="row"
+									v-for="(item, idx) in codeList"
+									:key="item.codeId"
+									@click="choiceCode(item)"
+								>
+									<td>{{ idx + 1 }}</td>
+									<td>{{ item.codeMasterNm }}</td>
+									<td>{{ item.code }}</td>
+									<td>{{ item.codeInfo }}</td>
+									<td>{{ item.useYn == 'Y' ? '사용' : '미사용' }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -222,21 +170,21 @@
 					<div class="component-box-wrap">
 						<div class="component-box">
 							<div class="component-box-top">
-								<p class="component__title">그룹명</p>
+								<p class="component__title">코드 아이디</p>
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<input class="input" type="text" placeholder="입력하세요" />
+									<input class="input " type="text" readonly v-model="codeVO.codeId" />
 								</div>
 							</div>
 						</div>
 						<div class="component-box">
 							<div class="component-box-top">
-								<p class="component__title">코드 아이디</p>
+								<p class="component__title">코드</p>
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<input class="input " type="text" placeholder="입력하세요" />
+									<input class="input " type="text" placeholder="입력하세요" v-model="codeVO.code" />
 								</div>
 							</div>
 						</div>
@@ -246,7 +194,12 @@
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<input class="input " type="text" placeholder="입력하세요" />
+									<input
+										class="input "
+										type="text"
+										placeholder="입력하세요"
+										v-model="codeVO.codeInfo"
+									/>
 								</div>
 							</div>
 						</div>
@@ -257,7 +210,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.char_1"
+										/>
 									</div>
 								</div>
 							</div>
@@ -267,7 +225,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.int_1"
+										/>
 									</div>
 								</div>
 							</div>
@@ -279,7 +242,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.char_2"
+										/>
 									</div>
 								</div>
 							</div>
@@ -289,7 +257,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.int_2"
+										/>
 									</div>
 								</div>
 							</div>
@@ -301,7 +274,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.char_3"
+										/>
 									</div>
 								</div>
 							</div>
@@ -311,7 +289,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.int_3"
+										/>
 									</div>
 								</div>
 							</div>
@@ -323,7 +306,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.char_4"
+										/>
 									</div>
 								</div>
 							</div>
@@ -333,7 +321,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.int_4"
+										/>
 									</div>
 								</div>
 							</div>
@@ -345,7 +338,12 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.char_5"
+										/>
 									</div>
 								</div>
 							</div>
@@ -355,25 +353,34 @@
 								</div>
 								<div class="component-box-cnt">
 									<div class="input-box">
-										<input class="input " type="text" placeholder="입력하세요" />
+										<input
+											class="input "
+											type="text"
+											placeholder="입력하세요"
+											v-model="codeVO.int_5"
+										/>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="component-box">
+						<div class="component-box" v-if="codeVO.codeId">
 							<div class="component-box-top">
 								<p class="component__title">순서 변경</p>
 							</div>
 							<div class="component-box-cnt">
 								<div class="buttons">
-									<button type="button" class="button button__move-top">
+									<button type="button" class="button button__move-top" @click="moveTop">
 										최상단으로 올리기
 									</button>
-									<button type="button" class="button button__move-up">
+									<button type="button" class="button button__move-up" @click="moveUp">
 										한칸 위로 올리기
 									</button>
-									<button type="button" class="button button__move-down">한칸 아래로 내리기</button>
-									<button type="button" class="button button__move-bottom">최하단으로 내리기</button>
+									<button type="button" class="button button__move-down" @click="moveDown">
+										한칸 아래로 내리기
+									</button>
+									<button type="button" class="button button__move-bottom" @click="moveBottom">
+										최하단으로 내리기
+									</button>
 								</div>
 							</div>
 						</div>
@@ -387,10 +394,10 @@
 										<input
 											type="radio"
 											name="pageActive"
-											value="yes"
+											value="Y"
 											id="pageActiveY"
 											class="input input-radio"
-											checked
+											v-model="codeVO.useYn"
 										/>
 										<label for="pageActiveY">사용</label>
 									</li>
@@ -398,9 +405,10 @@
 										<input
 											type="radio"
 											name="pageActive"
-											value="no"
+											value="N"
 											id="pageActiveN"
 											class="input input-radio"
+											v-model="codeVO.useYn"
 										/>
 										<label for="pageActiveN">미사용</label>
 									</li>
@@ -411,9 +419,9 @@
 				</div>
 				<div class="buttons-complete">
 					<div class="buttons">
-						<button type="submit" class="button button__submit">저장</button>
-						<button type="button" class="button button__cancel">초기화</button>
-						<button type="button" class="button button__delete">삭제</button>
+						<button type="submit" class="button button__submit" @click="saveCode">저장</button>
+						<button type="button" class="button button__cancel" @click="initCode">초기화</button>
+						<button type="button" class="button button__delete" @click="deleteCode">삭제</button>
 					</div>
 				</div>
 			</div>
@@ -422,9 +430,187 @@
 </template>
 
 <script>
+import {
+	selectCodeMasterList,
+	insertCodeMaster,
+	updateCodeMaster,
+	deleteCodeMaster,
+	selectCodeList,
+	insertCode,
+	updateCode,
+	deleteCode,
+	moveCode,
+} from '@/api/systemCode';
 export default {
-	data: function() {
-		return {};
+	async created() {
+		await this.selectCodeMasterList();
+		if (this.codeMasterList.length > 0) {
+			await this.choiceCodeMaster(this.codeMasterList[0]);
+		}
+	},
+	data() {
+		return {
+			pagingVO: {
+				pageNo: 0,
+				searchKeyword: '',
+				searchKind: 1,
+			},
+			codePagingVO: {
+				pageNo: 0,
+			},
+			codeMasterVO: {
+				useYn: 'Y',
+			},
+			codeVO: {
+				useYn: 'Y',
+			},
+			codeMasterList: [],
+			codeList: [],
+			codeMasterNm: '',
+			codeMasterId: '',
+		};
+	},
+	methods: {
+		async selectCodeMasterList() {
+			let res = await selectCodeMasterList(this.pagingVO);
+			this.codeMasterList = res.data;
+		},
+		async saveMaster() {
+			let txt = '저장';
+			if (this.codeMasterVO.codeMasterId) {
+				txt = '수정';
+			}
+			this.sConfirm(txt + '하시겠습니까?', async () => {
+				if (!this.codeMasterVO.codeMasterNm) {
+					this.sAlert('그룹명을 입력해주세요.');
+					this.$refs.codeMasterNm.focus();
+					return;
+				} else if (!this.codeMasterVO.codeMasterInfo) {
+					this.sAlert('그룹 정보를 입력해 주세요.');
+					this.$refs.codeMasterInfo.focus();
+					return;
+				}
+				let res;
+				if (!this.codeMasterVO.codeMasterId) {
+					res = await insertCodeMaster(this.codeMasterVO);
+				} else {
+					res = await updateCodeMaster(this.codeMasterVO);
+				}
+				if (res.result == 0) {
+					this.selectCodeMasterList();
+					this.initMaster();
+				}
+				this.sAlert(res.resultMsg);
+			});
+		},
+		// 마스터 정보 초기화
+		initMaster() {
+			this.codeMasterVO = {
+				useYn: 'Y',
+			};
+			this.codeMasterId = '';
+			this.codeMasterNm = '';
+			this.initCode();
+		},
+		// 마스터 삭제
+		async deleteMaster() {
+			this.sConfirm('삭제하시겠습니까?', async () => {
+				// TODO
+				let res = deleteCodeMaster(this.codeMasterVO.codemasterId);
+				if (res.result == 0) {
+					this.selectCodeMasterList();
+				}
+				this.sAlert(res.resultMsg);
+			});
+		},
+		choiceCodeMaster(item) {
+			this.codeMasterVO = JSON.parse(JSON.stringify(item));
+			this.codeMasterId = item.codeMasterId;
+			this.codeMasterNm = item.codeMasterNm;
+			this.selectCodeList();
+		},
+		choiceCode(item) {
+			this.codeVO = JSON.parse(JSON.stringify(item));
+		},
+		async selectCodeList() {
+			this.codePagingVO.searchId = this.codeMasterId;
+			let res = await selectCodeList(this.codePagingVO);
+			if (res.result == 0) {
+				this.codeList = res.data;
+			}
+			this.codeVO.codeMasterNm = this.codeMasterNm;
+			this.codeVO.codeMasterId = this.codeMasterId;
+		},
+		initCode() {
+			this.codeVO = {
+				codeMasterNm: this.codeMasterNm,
+				codeMasterId: this.codeMasterId,
+				useYn: 'Y',
+			};
+		},
+		async saveCode() {
+			let txt = '저장';
+			if (this.codeVO.codeId) {
+				txt = '수정';
+			}
+			console.log(this.codeVO);
+			this.sConfirm(txt + '하시겠습니까?', async () => {
+				if (!this.codeVO.code) {
+					this.sAlert('코드를 입력해 주세요.');
+					return;
+				} else if (!this.codeVO.codeInfo) {
+					this.sAlert('코드 정보를 입력해 주세요.');
+					return;
+				}
+				let res;
+				if (this.codeVO.codeId) {
+					res = await updateCode(this.codeVO);
+				} else {
+					res = await insertCode(this.codeVO);
+				}
+				if (res.result == 0) {
+					this.initCode();
+					this.selectCodeList();
+				}
+				this.sAlert(res.resultMsg);
+			});
+		},
+		async deleteCode() {
+			let res = await deleteCode(this.codeVO.codeId);
+			if (res.result == 0) {
+				this.selectCodeList();
+			}
+			this.sAlert(res.resultMsg);
+		},
+		// 최상단으로 순서 변경
+		async moveTop() {
+			if (this.codeVO.ord == 1) {
+				return;
+			}
+			this.changeOrd(1);
+		},
+		// 상단으로 변경
+		async moveUp() {
+			this.changeOrd(2);
+		},
+		// 하단으로 순서 변경
+		async moveDown() {
+			this.changeOrd(3);
+		},
+		// 최하단으로 순서 변경
+		moveBottom() {
+			if (this.codeList.length == this.codeVO.ord) {
+				return;
+			}
+			this.changeOrd(4);
+		},
+		async changeOrd(gu) {
+			let res = await moveCode(gu, this.codeVO.codeMasterId, this.codeVO.ord);
+			if (res.result == 0) {
+				this.menuVO.ord = res.data + 1;
+			}
+			this.selectMenuList();
+		},
 	},
 };
 </script>

@@ -41,28 +41,15 @@ Vue.mixin({
 			});
 		},
 		// 전역 확인 창
-		async sConfirm(text, param) {
-			let params = {};
-			// 파라미터로 온 값들을 세팅
-			for (let data in param) {
-				params.append(data, param[data]);
-			}
-			// 내용 세팅
-			if (text) {
-				params.title = text;
-			}
-
-			// 취소 버튼
-			params.showCancelButton = true;
-			// 확인 버튼에 텍스트 내용이 없다면 '예'로 초기화
-			if (!params.confirmButtonText) {
-				params.confirmButtonText = '예';
-			}
-			if (!params.cancelButtonText) {
-				params.cancelButtonText = '아니오';
-			}
-			return await this.$swal(params).then(result => {
-				return result.isConfirmed;
+		async sConfirm(text, successFunction) {
+			console.log(typeof successFunction);
+			const options = { title: '확인', cancelLabel: '아니오', okLabel: '예' };
+			await this.$dialogs.confirm(text, options).then(async res => {
+				console.log(res); // {ok: true|false|undefined}
+				if (res.ok) {
+					await successFunction();
+				}
+				return res;
 			});
 		},
 		checkBizNo(bizNo) {

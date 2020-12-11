@@ -1,7 +1,7 @@
 <template>
 	<li>
-		<div @click="toggle" :class="{ 'lst-tree__menu': isFolder }">
-			<span v-if="isFolder" class="icon-folder-open">{{ isOpen ? '-' : '+' }}</span>
+		<div :class="{ 'lst-tree__menu': isFolder }">
+			<span v-if="isFolder" @click="toggle" class="icon-folder-open">{{ isOpen ? '-' : '+' }}</span>
 			<span @click="clickMenu(item)">{{ item.name }}</span>
 		</div>
 		<ul class="lst-tree__sub" v-show="isOpen" v-if="isFolder" style="padding-left: 1em;">
@@ -16,15 +16,20 @@
 </template>
 
 <script>
+import { EventBus } from '@/utils/eventBus';
 export default {
 	name: 'tree-item',
 	props: {
 		// 컴포넌트에서 사용할 변수
 		item: Object,
 	},
+	created() {
+		this.isOpen = this.item.isOpen;
+	},
 	data() {
 		return {
 			isOpen: false, // tree가 열렸는지 확인.
+			menuVO: {},
 		};
 	},
 	computed: {
@@ -49,10 +54,7 @@ export default {
 		 * @author : seunggu
 		 ***********************************************/
 		async clickMenu(data) {
-			if (data.menuId == 0) {
-				return;
-			}
-			console.log('dddd');
+			EventBus.$emit('choiceMenu', data);
 		},
 	},
 };

@@ -1,4 +1,8 @@
 function saveCookie(name, value) {
+	let val = getCookie(name);
+	if (val) {
+		document.cookie = `${val}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+	}
 	document.cookie = `${name}=${value}`;
 }
 

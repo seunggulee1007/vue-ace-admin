@@ -18,6 +18,9 @@ export default {
 		state.token = '';
 		state.userNm = '';
 	},
+	setToken(state, token) {
+		state.token = token;
+	},
 	setSpinnerStatus(state) {
 		state.spinnerStatus = !state.spinnerStatus;
 	},

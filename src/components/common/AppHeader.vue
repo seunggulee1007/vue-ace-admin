@@ -16,7 +16,7 @@
 					<li class="lst-gnb__title">
 						<p>메뉴</p>
 					</li>
-					<li class="lst-gnb__item on">
+					<li class="lst-gnb__item">
 						<a href="/menu/menu" class="lst-gnb__link">메뉴 등록</a>
 					</li>
 					<li class="lst-gnb__item">

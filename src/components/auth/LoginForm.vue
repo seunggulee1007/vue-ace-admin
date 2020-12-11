@@ -38,20 +38,20 @@
 					<div>
 						<div class="input-box">
 							<span class="input-checkbox">
-								<input type="checkbox" id="checkboxId" />
+								<input type="checkbox" id="checkboxId" value="Y" v-model="saveId" />
 								<label for="checkboxId" class="input-checkbox__label">
 									<span>아이디 저장</span>
 								</label>
 							</span>
 						</div>
-						<div class="input-box">
+						<!-- <div class="input-box">
 							<span class="input-checkbox">
 								<input type="checkbox" id="checkboxPw" />
 								<label for="checkboxPw" class="input-checkbox__label">
 									<span>비밀번호 저장</span>
 								</label>
 							</span>
-						</div>
+						</div> -->
 					</div>
 					<a href="#" class="link">아이디/비밀번호 찾기</a>
 				</div>
@@ -63,11 +63,20 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { getCookie, saveCookie, deleteCookie } from '@/utils/cookies';
+
 export default {
+	created() {
+		this.userId = getCookie(process.env.VUE_APP_LOGIN_USER_ID);
+		if (this.userId) {
+			this.saveId = 'Y';
+		}
+	},
 	data() {
 		return {
 			userId: '',
 			password: '',
+			saveId: '',
 		};
 	},
 	methods: {
@@ -88,9 +97,16 @@ export default {
 			};
 			try {
 				let res = await this.LOGIN(params);
-				console.log(res);
 				if (res.result == 0) {
-					this.$router.push('/menu/module');
+					if (this.saveId) {
+						saveCookie(process.env.VUE_APP_LOGIN_USER_ID, this.userId);
+					} else {
+						let userId = getCookie(process.env.VUE_APP_LOGIN_USER_ID);
+						if (userId) {
+							deleteCookie(userId);
+						}
+					}
+					this.$router.push('/menu/menu');
 				} else {
 					this.sAlert(res.resultMsg);
 				}

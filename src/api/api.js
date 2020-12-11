@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setInterceptors } from '@/api/common';
-import { deleteCookie } from '@/utils/cookies';
+import { deleteCookie, saveCookie } from '@/utils/cookies';
 import router from '@/router/router';
 import store from '@/store/store';
 
@@ -21,9 +21,14 @@ function doAxios(url, method, params, config) {
 		params,
 		config,
 	})
-		.then(({ data }) => {
+		.then(response => {
 			store.state.spinnerStatus = false;
-			return data;
+			// 토큰을 계속 갱신해 준다. 토큰은 20분간 유효하다.
+			if (response.headers.ACCESS_TOKEN) {
+				store.commit('setToken', response.headers.ACCESS_TOKEN);
+				saveCookie(process.env.VUE_APP_AUTH_TOKEN, response.headers.ACCESS_TOKEN);
+			}
+			return response.data;
 		})
 		.catch(error => {
 			store.state.spinnerStatus = false;
@@ -31,7 +36,6 @@ function doAxios(url, method, params, config) {
 				result: -1,
 			};
 			if (error.response) {
-				console.log('error.response');
 				res = error.response.data;
 				res.status = error.response.status;
 				if (error.response.status == 401) {
@@ -43,10 +47,10 @@ function doAxios(url, method, params, config) {
 					router.push('/login');
 				}
 			} else if (!error.status) {
-				console.log('status');
 				res.resultMsg = '네트워크 연결을 확인해 주세요';
+				alert(res.resultMsg);
 			} else {
-				console.log('else');
+				console.log('2222222222222');
 				res.data.resultMsg = error.message;
 			}
 			return res;

@@ -17,7 +17,7 @@
 										class="input "
 										type="text"
 										placeholder="입력하세요"
-										v-model="clientNm"
+										v-model="clientVO.clientNm"
 										maxlength="150"
 										ref="clientNm"
 									/>
@@ -32,7 +32,7 @@
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<select class="input-select" v-model="clientKind" ref="clientKind">
+									<select class="input-select" v-model="clientVO.clientKind" ref="clientKind">
 										<option value="" selected>선택하세요</option>
 										<option value="">1</option>
 										<option value="">2</option>
@@ -51,13 +51,14 @@
 										class="input "
 										type="text"
 										placeholder="하이픈(-) 없이 입력하세요"
-										v-model="bizNo"
+										v-model="clientVO.bizNo"
 										maxlength="10"
 										ref="bizNo"
 									/>
 									<button type="button" class="button" @click="searchBizInfo">휴/폐업 조회</button>
+									<button type="button" class="button" @click="reSearchBizInfo">재 조회</button>
 								</div>
-								<p class="msg-state">{{ bizResultMsg }}</p>
+								<p class="msg-state">{{ clientVO.bizResultMsg }}</p>
 							</div>
 						</div>
 						<div class="component-box">
@@ -70,7 +71,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="ceoNm"
+										v-model="clientVO.ceoNm"
 										maxlength="30"
 										ref="ceoNm"
 									/>
@@ -87,7 +88,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="coRegNo"
+										v-model="clientVO.coRegNo"
 										ref="coRegNo"
 										maxlength="13"
 									/>
@@ -104,7 +105,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="bizCond"
+										v-model="clientVO.bizCond"
 										ref="bizCond"
 										maxlength="150"
 									/>
@@ -121,7 +122,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="bizKind"
+										v-model="clientVO.bizKind"
 										ref="bizKind"
 										maxlength="150"
 									/>
@@ -138,10 +139,12 @@
 									<button type="button" class="button" @click="openPostData()">주소 검색</button>
 								</div>
 								<div class="input-box">
-									<input class="input" type="text" placeholder="상세주소" />
-								</div>
-								<div v-if="openPostFlag">
-									<vue-daum-postcode @complete="getPostData($event)" />
+									<input
+										class="input"
+										type="text"
+										placeholder="상세주소"
+										v-model="clientVO.addrDetail"
+									/>
 								</div>
 							</div>
 						</div>
@@ -155,7 +158,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="telNo"
+										v-model="clientVO.telNo"
 										maxlength="11"
 									/>
 								</div>
@@ -171,7 +174,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="manager"
+										v-model="clientVO.manager"
 										maxlength="15"
 									/>
 								</div>
@@ -188,7 +191,7 @@
 										type="text"
 										placeholder="입력하세요"
 										maxlength="11"
-										v-model="phone"
+										v-model="clientVO.phone"
 									/>
 								</div>
 							</div>
@@ -203,7 +206,7 @@
 										class="input"
 										type="text"
 										placeholder="입력하세요"
-										v-model="email"
+										v-model="clientVO.email"
 										maxlength="50"
 									/>
 								</div>
@@ -220,7 +223,7 @@
 										type="text"
 										placeholder="입력하세요"
 										maxlength="9"
-										v-model="contractAmt"
+										v-model="clientVO.contractAmt"
 									/>
 								</div>
 							</div>
@@ -259,13 +262,16 @@
 				</div>
 			</div>
 		</section>
-		<div class="popup show">
+		<div class="popup" :class="{ show: openPostFlag }">
 			<div class="component-area">
 				<div class="popup-top">
-					<strong class="popup__title">팝업제목</strong>
+					<strong class="popup__title">주소 검색</strong>
 				</div>
 				<!-- vue-daum-postcode -->
-				<button type="button" class="button__close">
+				<div v-if="openPostFlag">
+					<vue-daum-postcode @complete="getPostData($event)" />
+				</div>
+				<button type="button" class="button__close" @click="closeModal">
 					<span class="icon icon-close"></span>
 					<span class="blind">닫기</span>
 				</button>
@@ -275,36 +281,40 @@
 </template>
 
 <script>
+import { searchBizInfo } from '@/api/client';
 export default {
 	data() {
 		return {
 			idDupleResult: false, // 아이디 중복 체크 여부
 			idDupleResultMsg: '거래처명 중복 체크를 해 주세요.',
-			clientNm: '',
-			clientKind: '',
-			bizNo: '',
-			bizResultMsg: '',
-			bizResultEngMsg: '',
-			bizResult: '',
-			ceoNm: '',
-			coRegNo: '',
-			bizCond: '',
-			bizKind: '',
-			postNo: '',
-			addr: '',
-			addrEng: '',
-			addrType: '',
-			addrDetail: '',
-			buildingCd: '',
-			buildingNm: '',
-			sido: '',
-			sigungu: '',
-			sigunguCd: '',
-			telNo: '',
-			manager: '',
-			phone: '',
-			contractAmt: 0,
-			email: '',
+			clientVO: {
+				clientNm: '',
+				clientKind: '',
+				bizNo: '',
+				bizResultMsg: '',
+				bizResultEngMsg: '',
+				bizResult: '',
+				ceoNm: '',
+				coRegNo: '',
+				bizCond: '',
+				bizKind: '',
+				postNo: '',
+				addr: '',
+				addrEng: '',
+				addrType: '',
+				addrDetail: '',
+				buildingCd: '',
+				buildingNm: '',
+				sido: '',
+				sigungu: '',
+				sigunguCd: '',
+				telNo: '',
+				manager: '',
+				phone: '',
+				contractAmt: 0,
+				email: '',
+			},
+
 			openPostFlag: false,
 		};
 	},
@@ -316,7 +326,26 @@ export default {
 		openPostData() {
 			this.openPostFlag = true;
 		},
-		searchBizInfo() {},
+		closeModal() {
+			this.openPostFlag = false;
+		},
+		async searchBizInfo() {
+			if (!this.clientVO.bizNo) {
+				this.sAlert('사업자번호를 입력해 주세요.');
+				return;
+			}
+			if (!this.checkBizNo(this.clientVO.bizNo)) {
+				this.sAlert('사업자번호가 유효하지 않습니다.');
+				return;
+			}
+			let res = await searchBizInfo(this.clientVO.bizNo);
+			if (res.result == 0) {
+				this.clientVO.bizResultMsg = res.data.resultMsg;
+				this.clientVO.bizResultDetailMsg = res.data.detailMsg;
+				this.clientVO.bizResultDetailEngMsg = res.data.detailMsgEngl;
+			}
+			console.log(res);
+		},
 		// 아이디 중복 체크
 		confirmDuple() {
 			if (!this.clientNm) {
@@ -325,6 +354,8 @@ export default {
 				return;
 			}
 		},
+		// 휴폐업 재 조회
+		reSearchBizInfo() {},
 	},
 };
 </script>

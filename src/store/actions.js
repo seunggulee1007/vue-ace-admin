@@ -12,12 +12,6 @@ export default {
 			saveCookie(process.env.VUE_APP_AUTH_TOKEN, data.authToken);
 			saveCookie(process.env.VUE_APP_USER_NM, data.user.userNm);
 			saveCookie(process.env.VUE_APP_USER_ID, data.user.userId);
-		} else {
-			this._vm.$swal({
-				title: '알림',
-				text: res.resultMsg,
-				icon: 'error',
-			});
 		}
 
 		return res;
