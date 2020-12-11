@@ -129,8 +129,12 @@
 					<h4 class="section__title">시스템 코드 등록</h4>
 				</div>
 				<div class="component-area">
-					<div class="component-box-top">
+					<div class="component-box component-box-top">
 						<strong class="content__title">선택된 그룹명</strong>
+						<button type="button" class="button button__delete">
+							<span class="icon icon-delete"></span>
+							선택삭제
+						</button>
 					</div>
 					<div class="table-wrap">
 						<table class="table">
