@@ -259,6 +259,18 @@
 				</div>
 			</div>
 		</section>
+		<div class="popup show">
+			<div class="component-area">
+				<div class="popup-top">
+					<strong class="popup__title">팝업제목</strong>
+				</div>
+				<!-- vue-daum-postcode -->
+				<button type="button" class="button__close">
+					<span class="icon icon-close"></span>
+					<span class="blind">닫기</span>
+				</button>
+			</div>
+		</div>
 	</div>
 </template>
 

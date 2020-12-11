@@ -176,7 +176,7 @@
 										<div class="input-box">
 											<span class="input-checkbox">
 												<input type="checkbox" id="checkboxSelect1-2" />
-												<label for="checkboxSelect1-2"	class="input-checkbox__label">
+												<label for="checkboxSelect1-2" class="input-checkbox__label">
 													<span class="blind">선택</span>
 												</label>
 											</span>

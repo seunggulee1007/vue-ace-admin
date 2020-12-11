@@ -130,6 +130,32 @@
 }
 
 
+/* popup */
+.popup{
+	display: none;
+}
+.popup.show{
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0, 0.4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.popup .component-area{
+	min-width: 16vw;
+}
+.popup-top{
+	margin-bottom: 16px;
+}
+
+.popup .button__close{
+	position: absolute;
+	right: 36px;
+	top: 36px;
+}
 
 /* common class */
 .blind {
@@ -245,6 +271,7 @@
 	margin-bottom: 16px;
 }
 .component-area {
+	position: relative;
 	background-color: #fff;
 	border: 1px solid #ededed;
 	border-radius: 16px;
@@ -342,6 +369,12 @@
 	color: #67707c;
 	font-weight: 700;
 }
+
+.popup__title{
+	font-size: 1.2em;
+	font-weight: 700;
+}
+
 
 /* message */
 .msg-canceled {
