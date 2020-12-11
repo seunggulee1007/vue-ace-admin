@@ -377,6 +377,7 @@
 	color: #67707c;
 }
 
+
 /* link */
 a.link{
 	color: #9ba4b4;
@@ -881,3 +882,27 @@ a.link{
 }
 
 
+/* error */
+.error{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	background-color: #f5f6f8;
+}
+.error .inner-wrap{
+	margin-top: -16vh;
+}
+.error .error-code {
+	color: #ff6b81;
+	font-size: 7rem;
+	font-weight: 700;
+	text-align: center;
+}
+.error .msg-error {
+	color: #67707c;
+	font-size: 2.4rem;
+	font-weight: 700;
+	text-align: center;
+}
