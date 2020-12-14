@@ -12,7 +12,7 @@
 					</select>
 					<div class="input-box">
 						<input class="input" type="text" v-model="pagingVO.searchKeyword" placeholder="입력하세요" />
-						<button type="button" class="button" @click="rows = []">
+						<button type="button" class="button" @click="selectCodeMasterList">
 							<span class="icon icon-search"></span>
 							조회
 						</button>
@@ -145,9 +145,10 @@
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>그룹명</th>
+									<th>코드</th>
 									<th>코드명</th>
 									<th>코드 정보</th>
+									<th>보기순서</th>
 									<th>사용여부</th>
 								</tr>
 							</thead>
@@ -159,9 +160,10 @@
 									@click="choiceCode(item)"
 								>
 									<td>{{ idx + 1 }}</td>
-									<td>{{ item.codeMasterNm }}</td>
 									<td>{{ item.code }}</td>
+									<td>{{ item.codeNm }}</td>
 									<td>{{ item.codeInfo }}</td>
+									<td>{{ item.ord }}</td>
 									<td>{{ item.useYn == 'Y' ? '사용' : '미사용' }}</td>
 								</tr>
 							</tbody>
@@ -174,7 +176,7 @@
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<input class="input " type="text" readonly v-model="codeVO.codeId" />
+									<input class="input" type="text" readonly v-model="codeVO.codeId" />
 								</div>
 							</div>
 						</div>
@@ -184,7 +186,29 @@
 							</div>
 							<div class="component-box-cnt">
 								<div class="input-box">
-									<input class="input " type="text" placeholder="입력하세요" v-model="codeVO.code" />
+									<input
+										class="input"
+										type="text"
+										placeholder="입력하세요"
+										v-model="codeVO.code"
+										ref="code"
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">코드 명</p>
+							</div>
+							<div class="component-box-cnt">
+								<div class="input-box">
+									<input
+										class="input"
+										type="text"
+										placeholder="입력하세요"
+										v-model="codeVO.codeNm"
+										ref="codeNm"
+									/>
 								</div>
 							</div>
 						</div>
@@ -195,10 +219,11 @@
 							<div class="component-box-cnt">
 								<div class="input-box">
 									<input
-										class="input "
+										class="input"
 										type="text"
 										placeholder="입력하세요"
 										v-model="codeVO.codeInfo"
+										ref="codeInfo"
 									/>
 								</div>
 							</div>
@@ -211,7 +236,7 @@
 								<div class="component-box-cnt">
 									<div class="input-box">
 										<input
-											class="input "
+											class="input"
 											type="text"
 											placeholder="입력하세요"
 											v-model="codeVO.char_1"
@@ -226,7 +251,7 @@
 								<div class="component-box-cnt">
 									<div class="input-box">
 										<input
-											class="input "
+											class="input"
 											type="text"
 											placeholder="입력하세요"
 											v-model="codeVO.int_1"
@@ -243,7 +268,7 @@
 								<div class="component-box-cnt">
 									<div class="input-box">
 										<input
-											class="input "
+											class="input"
 											type="text"
 											placeholder="입력하세요"
 											v-model="codeVO.char_2"
@@ -444,9 +469,6 @@ import {
 export default {
 	async created() {
 		await this.selectCodeMasterList();
-		if (this.codeMasterList.length > 0) {
-			await this.choiceCodeMaster(this.codeMasterList[0]);
-		}
 	},
 	data() {
 		return {
@@ -474,6 +496,13 @@ export default {
 		async selectCodeMasterList() {
 			let res = await selectCodeMasterList(this.pagingVO);
 			this.codeMasterList = res.data;
+			if (this.codeMasterList.length > 0 && !this.codeMasterVO.codeMasterId) {
+				await this.choiceCodeMaster(this.codeMasterList[0]);
+			} else if (this.codeMasterList.length == 0) {
+				this.initMaster();
+				this.codeList = [];
+				this.initCode();
+			}
 		},
 		async saveMaster() {
 			let txt = '저장';
@@ -510,13 +539,14 @@ export default {
 			};
 			this.codeMasterId = '';
 			this.codeMasterNm = '';
+			this.codeList = [];
 			this.initCode();
 		},
 		// 마스터 삭제
 		async deleteMaster() {
 			this.sConfirm('삭제하시겠습니까?', async () => {
 				// TODO
-				let res = deleteCodeMaster(this.codeMasterVO.codemasterId);
+				let res = deleteCodeMaster(this.codeMasterVO.codeMasterId);
 				if (res.result == 0) {
 					this.selectCodeMasterList();
 				}
@@ -530,6 +560,8 @@ export default {
 			this.selectCodeList();
 		},
 		choiceCode(item) {
+			console.log('item:::');
+			console.log(item);
 			this.codeVO = JSON.parse(JSON.stringify(item));
 		},
 		async selectCodeList() {
@@ -537,6 +569,7 @@ export default {
 			let res = await selectCodeList(this.codePagingVO);
 			if (res.result == 0) {
 				this.codeList = res.data;
+				console.log(this.codeList);
 			}
 			this.codeVO.codeMasterNm = this.codeMasterNm;
 			this.codeVO.codeMasterId = this.codeMasterId;
@@ -557,9 +590,15 @@ export default {
 			this.sConfirm(txt + '하시겠습니까?', async () => {
 				if (!this.codeVO.code) {
 					this.sAlert('코드를 입력해 주세요.');
+					this.$refs.code.focus();
+					return;
+				} else if (!this.codeVO.codeNm) {
+					this.sAlert('코드명을 입력해 주세요.');
+					this.$refs.codeNm.focus();
 					return;
 				} else if (!this.codeVO.codeInfo) {
 					this.sAlert('코드 정보를 입력해 주세요.');
+					this.$refs.codeInfo.focus();
 					return;
 				}
 				let res;
@@ -605,11 +644,11 @@ export default {
 			this.changeOrd(4);
 		},
 		async changeOrd(gu) {
-			let res = await moveCode(gu, this.codeVO.codeMasterId, this.codeVO.ord);
+			let res = await moveCode(gu, this.codeVO.ord, this.codeVO.codeMasterId);
 			if (res.result == 0) {
-				this.menuVO.ord = res.data + 1;
+				this.codeVO.ord = res.data + 1;
 			}
-			this.selectMenuList();
+			this.selectCodeList();
 		},
 	},
 };

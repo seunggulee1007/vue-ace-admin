@@ -6,7 +6,12 @@
 			</h4>
 			<div class="lst-wrap">
 				<div class="input-box">
-					<input class="input " type="text" placeholder="입력하세요" />
+					<select v-model="pagingVO.searchKind">
+						<option value="1">고객사명</option>
+						<option value="2">대표명</option>
+						<option value="3">사업자번호</option>
+					</select>
+					<input class="input " type="text" placeholder="입력하세요" v-model="pagingVO.searchKeyword" />
 					<button type="button" class="button">
 						<span class="icon icon-search"></span>
 						조회
@@ -24,63 +29,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="row">
-								<td>1</td>
-								<td>고객사1</td>
-								<td>123-45-67890</td>
-								<td>2020-01-01 ~ 2020-12-31</td>
+							<tr class="row" v-for="(item, idx) in clientList" :key="item.clientId">
+								<td>{{ idx + 1 }}</td>
+								<td>{{ item.clientNm }}</td>
+								<td>{{ item.bizNo | bizNoFilter }}</td>
 								<td>
-									<button type="button" class="button-state">
-										<span class="button-txt button-txt__true on">계약중</span>
-										<span class="button-txt button-txt__false">계약해지</span>
-									</button>
+									{{ item.contractDateFrom | dateFilter }} ~ {{ item.contractDateTo | dateFilter }}
 								</td>
-							</tr>
-							<tr class="row">
-								<td>2</td>
-								<td>고객사2</td>
-								<td>123-45-67890</td>
-								<td>2020-01-01 ~ 2020-12-31</td>
 								<td>
 									<button type="button" class="button-state">
-										<span class="button-txt button-txt__true on">계약중</span>
-										<span class="button-txt button-txt__false">계약해지</span>
-									</button>
-								</td>
-							</tr>
-							<tr class="row">
-								<td>3</td>
-								<td>고객사3</td>
-								<td>123-45-67890</td>
-								<td>2020-01-01 ~ 2020-12-31</td>
-								<td>
-									<button type="button" class="button-state">
-										<span class="button-txt button-txt__true">계약중</span>
-										<span class="button-txt button-txt__false on">계약해지</span>
-									</button>
-								</td>
-							</tr>
-							<tr class="row">
-								<td>4</td>
-								<td>고객사4</td>
-								<td>123-45-67890</td>
-								<td>2020-01-01 ~ 2020-12-31</td>
-								<td>
-									<button type="button" class="button-state">
-										<span class="button-txt button-txt__true on">계약중</span>
-										<span class="button-txt button-txt__false">계약해지</span>
-									</button>
-								</td>
-							</tr>
-							<tr class="row">
-								<td>5</td>
-								<td>고객사5</td>
-								<td>123-45-67890</td>
-								<td>2020-01-01 ~ 2020-12-31</td>
-								<td>
-									<button type="button" class="button-state">
-										<span class="button-txt button-txt__true">계약중</span>
-										<span class="button-txt button-txt__false on">계약해지</span>
+										<span
+											class="button-txt button-txt__true on"
+											:class="{
+												'button-txt__true on': item.clientStatus == '2',
+												'button-txt__false on': item.clientStatus == '3',
+											}"
+											>계약중</span
+										>
 									</button>
 								</td>
 							</tr>
@@ -187,7 +152,30 @@
 </template>
 
 <script>
-export default {};
+import { selectClientList } from '@/api/client';
+export default {
+	created() {
+		this.selectClientList();
+	},
+	data() {
+		return {
+			pagingVO: {
+				pageNo: 0,
+				searchKind: '1',
+			},
+			clientList: [],
+		};
+	},
+	methods: {
+		async selectClientList() {
+			let res = await selectClientList(this.pagingVO);
+			console.log(res);
+			if (res.result == 0) {
+				this.clientList = res.data;
+			}
+		},
+	},
+};
 </script>
 
 <style></style>

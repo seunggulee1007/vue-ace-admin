@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { setInterceptors } from '@/api/common';
-import { deleteCookie, saveCookie } from '@/utils/cookies';
 import router from '@/router/router';
 import store from '@/store/store';
 
@@ -15,6 +14,7 @@ const instance = createInstance();
 //test
 function doAxios(url, method, params, config) {
 	store.state.spinnerStatus = true;
+	console.log();
 	return instance({
 		url,
 		method,
@@ -26,7 +26,7 @@ function doAxios(url, method, params, config) {
 			// 토큰을 계속 갱신해 준다. 토큰은 20분간 유효하다.
 			if (response.headers.ACCESS_TOKEN) {
 				store.commit('setToken', response.headers.ACCESS_TOKEN);
-				saveCookie(process.env.VUE_APP_AUTH_TOKEN, response.headers.ACCESS_TOKEN);
+				store._vm.$cookie.set(process.env.VUE_APP_AUTH_TOKEN, response.headers.ACCESS_TOKEN);
 			}
 			return response.data;
 		})
@@ -39,20 +39,21 @@ function doAxios(url, method, params, config) {
 				res = error.response.data;
 				res.status = error.response.status;
 				if (error.response.status == 401) {
-					console.log('401 아니야 ?');
 					// 인증 오류라면 메인 페이지로
 					// 쿠키에서 인증정보 삭제 후
 					store.commit('clearLoginInfo');
-					deleteCookie(process.env.VUE_APP_AUTH_TOKEN);
+					store._vm.$cookie.delete(process.env.VUE_APP_AUTH_TOKEN);
 					router.push('/login');
 				}
 			} else if (!error.status) {
 				res.resultMsg = '네트워크 연결을 확인해 주세요';
-				alert(res.resultMsg);
 			} else {
-				console.log('2222222222222');
 				res.data.resultMsg = error.message;
 			}
+			store._vm.$message({
+				type: 'warnning',
+				message: res.resultMsg,
+			});
 			return res;
 		});
 }

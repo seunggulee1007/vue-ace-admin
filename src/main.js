@@ -4,53 +4,63 @@ import router from './router/router';
 import store from './store/store';
 
 import VueDaumPostcode from 'vue-daum-postcode';
-import 'v-slim-dialog/dist/v-slim-dialog.css';
-import SlimDialog from 'v-slim-dialog';
 
-Vue.use(SlimDialog);
+import VCalendar from 'v-calendar';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/ko';
+import VueCookie from 'vue-cookie';
+
+Vue.use(VueCookie);
+Vue.use(ElementUI, { locale });
+
 Vue.use(VueDaumPostcode);
+Vue.use(VCalendar);
 
 Vue.mixin({
 	methods: {
 		// 전역 알림 창
-		sAlert(text, title, okLabel) {
+		sAlert(text, title, okLabel, okFunction) {
 			title = title ? title : '알림';
 
 			text = text ? text : '';
 			okLabel = okLabel ? okLabel : '확인';
 
-			/**
-			 * @param String message
-			 * @param Object options default { title, okLabel = 'OK', size }
-			 */
-			const options = { title: title, size: 'sm', okLabel: okLabel };
-			this.$dialogs.alert(text, options).then(res => {
-				console.log(res); // {ok: true|false|undefined}
-			});
-		},
-		// 전역 경고창
-		sWarnning(text, title, confirmButtonText) {
-			title = title ? title : '경고';
-			text = text ? text : '';
-			confirmButtonText = confirmButtonText ? confirmButtonText : '확인';
-			this.$swal({
-				title,
-				text,
-				confirmButtonText,
-				icon: 'warning',
+			this.$alert(text, title, {
+				confirmButtonText: okLabel,
+				callback: action => {
+					/*this.$message({
+						type: 'info',
+						message: `action: ${action}`,
+					}); */
+					if (action) {
+						if (typeof okFunction == 'function') {
+							okFunction();
+						}
+					}
+				},
 			});
 		},
 		// 전역 확인 창
 		async sConfirm(text, successFunction) {
-			console.log(typeof successFunction);
-			const options = { title: '확인', cancelLabel: '아니오', okLabel: '예' };
-			await this.$dialogs.confirm(text, options).then(async res => {
-				console.log(res); // {ok: true|false|undefined}
-				if (res.ok) {
-					await successFunction();
-				}
-				return res;
-			});
+			this.$confirm(text, '확인', {
+				confirmButtonText: '예',
+				cancelButtonText: '아니오',
+				type: 'warning',
+			})
+				.then(() => {
+					/*this.$message({
+						type: 'success',
+						message: 'Delete completed',
+					});*/
+					successFunction();
+				})
+				.catch(() => {
+					/*this.$message({
+						type: 'info',
+						message: 'Delete canceled',
+					});*/
+				});
 		},
 		checkBizNo(bizNo) {
 			// 사업자 번호 체크
@@ -92,6 +102,22 @@ Vue.mixin({
 			}
 
 			return year + '-' + month + '-' + day;
+		},
+		formatDate(date, type) {
+			if (!type) {
+				type = '';
+			}
+			let year = date.getFullYear();
+			let month = new String(date.getMonth() + 1);
+			let day = new String(date.getDate());
+			if (month.length == 1) {
+				month = '0' + month;
+			}
+			if (day.length == 1) {
+				day = '0' + day;
+			}
+
+			return year + type + month + type + day;
 		},
 	},
 });

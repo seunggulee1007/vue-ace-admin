@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import { deleteCookie } from '@/utils/cookies';
 export default {
 	computed: {
 		isUserLogin() {
@@ -47,14 +46,11 @@ export default {
 		},
 	},
 	methods: {
-		async logoutUser() {
-			if (await this.sConfirm('로그아웃 하시겠습니까?')) {
+		logoutUser() {
+			this.sConfirm('로그아웃 하시겠습니까?', () => {
 				this.$store.commit('clearLoginInfo');
-				deleteCookie(process.env.VUE_APP_USER_NM);
-				deleteCookie(process.env.VUE_APP_AUTH_TOKEN);
-				deleteCookie(process.env.VUE_APP_USER_ID);
 				this.$router.push('/login');
-			}
+			});
 		},
 	},
 };

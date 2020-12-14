@@ -19,10 +19,6 @@ const routes = [
 		component: () => import('@/views/menu/Menu.vue'),
 	},
 	{
-		path: '/menu/program',
-		component: () => import('@/views/menu/Program.vue'),
-	},
-	{
 		path: '/contract/client',
 		component: () => import('@/views/contract/Client.vue'),
 	},

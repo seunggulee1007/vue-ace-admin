@@ -1,3 +1,4 @@
+// import { deleteCookie } from '@/utils/cookies';
 export default {
 	/**
 	 * 로그인 이후 state에  데이터 저장
@@ -14,6 +15,9 @@ export default {
 	 * @param {*} state
 	 */
 	clearLoginInfo(state) {
+		this._vm.$cookie.delete(process.env.VUE_APP_USER_NM);
+		this._vm.$cookie.delete(process.env.VUE_APP_AUTH_TOKEN);
+		this._vm.$cookie.delete(process.env.VUE_APP_USER_ID);
 		state.userId = '';
 		state.token = '';
 		state.userNm = '';

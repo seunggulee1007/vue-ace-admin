@@ -18,7 +18,7 @@
 				<div class="component-area">
 					<div class="component-box component-box-top">
 						<h5 class="content__title" v-if="!addFlag && parMenuNm">{{ parMenuNm }}</h5>
-						<h5 class="content__title" v-else>{{ menuVO.menuNm }}</h5>
+						<h5 class="content__title" v-else>{{ choiceMenuNm }}</h5>
 						<button
 							type="button"
 							class="button button__add"
@@ -35,7 +35,13 @@
 						</div>
 						<div class="component-box-cnt">
 							<div class="input-box">
-								<input class="input" type="text" placeholder="입력하세요" v-model="menuVO.menuNm" />
+								<input
+									class="input"
+									type="text"
+									placeholder="입력하세요"
+									v-model="menuVO.menuNm"
+									ref="menuNm"
+								/>
 							</div>
 						</div>
 					</div>
@@ -200,6 +206,11 @@ export default {
 		},
 		async addMenu() {
 			this.sConfirm('추가하시겠습니까?', async () => {
+				if (!this.menuVO.menuNm) {
+					this.sAlert('메뉴/페이지 명을 입력해 주세요.');
+					this.$refs.menuNm.focus();
+					return;
+				}
 				let res = await insertMenu(this.menuVO);
 				if (res.result == 0) {
 					this.selectMenuList();
@@ -221,6 +232,7 @@ export default {
 					this.addFlag = true;
 				}
 				this.menuVO = JSON.parse(JSON.stringify(data));
+				this.choiceMenuNm = data.menuNm;
 				this.menuVO.chgId = this.$store.getters.getUserId;
 				this.childCnt = this.menuVO.children.length;
 				delete this.menuVO.children;
@@ -242,6 +254,7 @@ export default {
 			this.sConfirm('수정하시겠습니까?', async () => {
 				if (!this.menuVO.menuNm) {
 					this.sAlert('메뉴/페이지 명을 입력해 주세요.');
+					this.$refs.menuNm.focus();
 					return;
 				}
 				this.menuVO.chgId = this.$store.getters.getUserId;
@@ -274,35 +287,25 @@ export default {
 			if (this.menuVO.ord == 1) {
 				return;
 			}
-			let res = await moveMenu(1, this.menuVO.parMenuId, this.menuVO.ord);
-			if (res.result == 0) {
-				this.menuVO.ord = res.data + 1;
-			}
-			this.selectMenuList();
+			this.changeOrd(1);
 		},
 		// 상단으로 변경
 		async moveUp() {
-			let res = await moveMenu(2, this.menuVO.parMenuId, this.menuVO.ord);
-			if (res.result == 0) {
-				this.menuVO.ord = res.data + 1;
-			}
-			this.selectMenuList();
+			this.changeOrd(2);
 		},
 		// 하단으로 순서 변경
 		async moveDown() {
-			let res = await moveMenu(3, this.menuVO.parMenuId, this.menuVO.ord);
-			console.log(res);
-			if (res.result == 0) {
-				this.menuVO.ord = res.data + 1;
-			}
-			this.selectMenuList();
+			this.changeOrd(3);
 		},
 		// 최하단으로 순서 변경
-		async moveBottom() {
+		moveBottom() {
 			if (this.childCnt == this.menuVO.ord) {
 				return;
 			}
-			let res = await moveMenu(4, this.menuVO.parMenuId, this.menuVO.ord);
+			this.changeOrd(4);
+		},
+		async changeOrd(gu) {
+			let res = await moveMenu(gu, this.menuVO.ord, this.menuVO.parMenuId);
 			if (res.result == 0) {
 				this.menuVO.ord = res.data + 1;
 			}
@@ -315,6 +318,7 @@ export default {
 			parMenuNm: '',
 			addFlag: false,
 			childCnt: 0,
+			choiceMenuNm: '',
 			menuVO: {
 				parMenuId: 0,
 				menuYn: 1,

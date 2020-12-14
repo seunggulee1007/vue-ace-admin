@@ -63,11 +63,10 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { getCookie, saveCookie, deleteCookie } from '@/utils/cookies';
 
 export default {
 	created() {
-		this.userId = getCookie(process.env.VUE_APP_LOGIN_USER_ID);
+		this.userId = this.$cookie.get(process.env.VUE_APP_LOGIN_USER_ID);
 		if (this.userId) {
 			this.saveId = 'Y';
 		}
@@ -99,11 +98,12 @@ export default {
 				let res = await this.LOGIN(params);
 				if (res.result == 0) {
 					if (this.saveId) {
-						saveCookie(process.env.VUE_APP_LOGIN_USER_ID, this.userId);
+						this.$cookie.set(process.env.VUE_APP_LOGIN_USER_ID, this.userId);
 					} else {
-						let userId = getCookie(process.env.VUE_APP_LOGIN_USER_ID);
+						let userId = this.$cookie.get(process.env.VUE_APP_LOGIN_USER_ID);
+						console.log(userId);
 						if (userId) {
-							deleteCookie(userId);
+							this.$cookie.delete(userId);
 						}
 					}
 					this.$router.push('/menu/menu');
