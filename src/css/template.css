@@ -956,3 +956,29 @@ a.link{
 	font-weight: 700;
 	text-align: center;
 }
+
+
+
+/* mobile */
+@media (max-width: 768px) {
+	
+	
+	
+	.component-area{
+		padding: 12px
+	}
+
+
+	/* logo temp */
+	.logo.logo-rec .mark{
+		font-size: 2em;
+		width: 40px;
+		height: 40px;
+	}
+	.logo.logo-rec p:last-child > span:first-child{
+		font-size: 18px;
+	}
+	.logo.logo-rec p:last-child > span:last-child{
+		font-size: 12px;
+	}
+}
