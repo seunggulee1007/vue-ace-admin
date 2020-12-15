@@ -38,6 +38,11 @@
 	border-top: 1px solid rgba(255,255,255, 0.16);
 }
 
+.admin-header .button__logout{
+	position: absolute;
+	bottom: 32px;
+}
+
 
 /* admin-container */
 .container.admin-container{
@@ -205,3 +210,47 @@
 	font-size: 12px;
 }
  */
+
+
+
+ /* mobile */
+ @media (max-width: 768px) {
+
+	/* .admin-header */
+	.header.admin-header{
+		grid-area: header;
+		height: 56px;
+		padding: 0 16px;
+
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+	.admin-header .logo{
+		display: none;
+	}
+	.admin-header .page__title{
+		padding: 0;
+	}
+	
+	.admin-gnb{
+		background-color: #16213e;
+	}
+	
+	.admin-header .lst-gnb{
+		padding-top: 56px;
+		border-top: 0;
+		font-size: 1.2em;
+	}
+	.admin-gnb .lst-gnb .lst-gnb__link{
+		padding: 12px 36px;
+		color: rgba(255,255,255,1);
+	}
+
+	.admin-header .button__logout{
+		left: 0;
+		bottom: 56px;
+		width: auto;
+	}
+
+ }

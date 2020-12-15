@@ -11,33 +11,46 @@
 				</p>
 			</h1>
 			<h2 class="page__title">슈퍼관리자센터</h2>
-			<nav class="admin-gnb">
-				<ul class="lst-gnb">
-					<li class="lst-gnb__title">
-						<p>메뉴</p>
-					</li>
-					<li class="lst-gnb__item">
-						<a href="/menu/menu" class="lst-gnb__link">메뉴 등록</a>
-					</li>
-					<li class="lst-gnb__item">
-						<a href="/menu/systemCode" class="lst-gnb__link">시스템 코드 등록</a>
-					</li>
-					<li class="lst-gnb__title">
-						<p>계약관리</p>
-					</li>
-					<li class="lst-gnb__item">
-						<a href="/contract/client" class="lst-gnb__link">고객사 등록</a>
-					</li>
-					<li class="lst-gnb__item">
-						<a href="/contract/clientModule" class="lst-gnb__link">고객사 모듈 등록</a>
-					</li>
-				</ul>
-			</nav>
+			<button type="button" class="button__nav">
+				<span class="nav-bar"></span>
+				<span class="nav-bar"></span>
+				<span class="nav-bar"></span>
+				<span class="blind">메뉴열기</span>
+			</button>
+			<div class="gnb-wrap">
+				<nav class="admin-gnb">
+					<ul class="lst-gnb">
+						<li class="lst-gnb__title">
+							<p>메뉴</p>
+						</li>
+						<li class="lst-gnb__item">
+							<a href="/menu/menu" class="lst-gnb__link">메뉴 등록</a>
+						</li>
+						<li class="lst-gnb__item">
+							<a href="/menu/systemCode" class="lst-gnb__link">시스템 코드 등록</a>
+						</li>
+						<li class="lst-gnb__title">
+							<p>계약관리</p>
+						</li>
+						<li class="lst-gnb__item">
+							<a href="/contract/client" class="lst-gnb__link">고객사 등록</a>
+						</li>
+						<li class="lst-gnb__item">
+							<a href="/contract/clientModule" class="lst-gnb__link">고객사 모듈 등록</a>
+						</li>
+					</ul>
+					<button type="button" class="button__close">
+						<span class="close-bar"></span>
+						<span class="close-bar"></span>
+						<span class="blind">메뉴닫기</span>
+					</button>
+				</nav>
+				<button class="button__logout" @click="logoutUser">
+					<span class="icon icon-logout"></span>
+					로그아웃
+				</button>
+			</div>
 		</div>
-		<button class="button__logout" @click="logoutUser">
-			<span class="icon icon-logout"></span>
-			로그아웃
-		</button>
 	</header>
 </template>
 
