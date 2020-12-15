@@ -1,9 +1,9 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__tree">
-			<h4 class="section__title">
-				<span>전체 메뉴</span>
-			</h4>
+			<div class="section-top">
+				<h4 class="section__title">전체 메뉴</h4>
+			</div>
 			<div class="tree-area">
 				<ul id="tree" class="tree tree-menu">
 					<tree-view :item="treeData" @choiceMenu="choiceMenu"></tree-view>

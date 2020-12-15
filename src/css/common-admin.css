@@ -56,16 +56,12 @@
 	overflow: hidden;
 }
 
-.admin-container .section__title{
-	margin-bottom: 24px;
-}
 .admin-container .section__tree .section__title,
 .admin-container .section__list .section__title{
 	font-size: 20px;
 	display: flex;
 	align-items: center;
 }
-
 
 .admin-container .section__list{
 	min-width: 36vw;

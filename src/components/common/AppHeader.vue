@@ -34,7 +34,10 @@
 				</ul>
 			</nav>
 		</div>
-		<button class="button__logout" @click="logoutUser">로그아웃</button>
+		<button class="button__logout" @click="logoutUser">
+			<span class="icon icon-logout"></span>
+			로그아웃
+		</button>
 	</header>
 </template>
 

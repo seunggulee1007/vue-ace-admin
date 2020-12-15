@@ -1,9 +1,9 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__list">
-			<h4 class="section__title">
-				<span>고객사 현황</span>
-			</h4>
+			<div class="section-top">
+				<h4 class="section__title">고객사 현황</h4>
+			</div>
 			<div class="lst-wrap">
 				<div class="input-box">
 					<select v-model="pagingVO.searchKind">
@@ -59,88 +59,86 @@
 				<div class="section-top">
 					<h3 class="section__title">고객사 모듈 등록</h3>
 				</div>
-				<article class="article">
-					<div class="article-top">
+				<div class="component-area">
+					<div class="component-top">
 						<strong class="content__title">
 							고객사명
 						</strong>
 					</div>
-					<div class="article-content">
-						<div class="table-wrap">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>No.</th>
-										<th>모듈명</th>
-										<th>사용여부</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="row">
-										<td>1</td>
-										<td>유연근무</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true on">사용</span>
-												<span class="button-txt button-txt__false">미사용</span>
-											</button>
-										</td>
-									</tr>
-									<tr class="row">
-										<td>2</td>
-										<td>영업CRM</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true on">사용</span>
-												<span class="button-txt button-txt__false">미사용</span>
-											</button>
-										</td>
-									</tr>
-									<tr class="row">
-										<td>3</td>
-										<td>비용정산</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true">사용</span>
-												<span class="button-txt button-txt__false on">미사용</span>
-											</button>
-										</td>
-									</tr>
-									<tr class="row">
-										<td>4</td>
-										<td>WEB 주문</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true">사용</span>
-												<span class="button-txt button-txt__false on">미사용</span>
-											</button>
-										</td>
-									</tr>
-									<tr class="row">
-										<td>5</td>
-										<td>구매 SCM</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true">사용</span>
-												<span class="button-txt button-txt__false on">미사용</span>
-											</button>
-										</td>
-									</tr>
-									<tr class="row">
-										<td>6</td>
-										<td>EIS</td>
-										<td>
-											<button type="button" class="button-state">
-												<span class="button-txt button-txt__true on">사용</span>
-												<span class="button-txt button-txt__false">미사용</span>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+					<div class="table-wrap">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>모듈명</th>
+									<th>사용여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="row">
+									<td>1</td>
+									<td>유연근무</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true on">사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="row">
+									<td>2</td>
+									<td>영업CRM</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true on">사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="row">
+									<td>3</td>
+									<td>비용정산</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true">사용</span>
+											<span class="button-txt button-txt__false on">미사용</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="row">
+									<td>4</td>
+									<td>WEB 주문</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true">사용</span>
+											<span class="button-txt button-txt__false on">미사용</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="row">
+									<td>5</td>
+									<td>구매 SCM</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true">사용</span>
+											<span class="button-txt button-txt__false on">미사용</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="row">
+									<td>6</td>
+									<td>EIS</td>
+									<td>
+										<button type="button" class="button-state">
+											<span class="button-txt button-txt__true on">사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-				</article>
+				</div>
 				<div class="buttons-complete">
 					<div class="buttons">
 						<button type="submit" class="button button__save">저장</button>
