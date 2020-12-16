@@ -3,8 +3,6 @@ import { loginUser } from '@/api/auth';
 export default {
 	async LOGIN({ commit }, params) {
 		let res = await loginUser(params);
-		console.log(res);
-		console.log(this);
 		// 결과값이 성공이라면
 		if (res.result == 0) {
 			let data = res.data;

@@ -8,6 +8,9 @@ function selectClientList(data) {
 	return doAxios('/client/clientList', 'get', data);
 }
 
+function selectClient(clientId) {
+	return doAxios(`/client/${clientId}`);
+}
 function confirmDuple(clientNm) {
 	return doAxios(`/client/confirmDuple/${clientNm}`, 'get');
 }
@@ -20,4 +23,4 @@ function modifyClient(data) {
 	return doAxios('/client', 'put', data);
 }
 
-export { searchBizInfo, confirmDuple, saveClient, modifyClient, selectClientList };
+export { searchBizInfo, confirmDuple, saveClient, modifyClient, selectClientList, selectClient };

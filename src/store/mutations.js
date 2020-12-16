@@ -1,4 +1,3 @@
-// import { deleteCookie } from '@/utils/cookies';
 export default {
 	/**
 	 * 로그인 이후 state에  데이터 저장

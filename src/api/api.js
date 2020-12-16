@@ -43,7 +43,18 @@ function doAxios(url, method, params, config) {
 					// 쿠키에서 인증정보 삭제 후
 					store.commit('clearLoginInfo');
 					store._vm.$cookie.delete(process.env.VUE_APP_AUTH_TOKEN);
-					router.push('/login');
+					this.$alert(error.response.resultMsg, '경고', {
+						confirmButtonText: '확인',
+						callback: action => {
+							/*this.$message({
+								type: 'info',
+								message: `action: ${action}`,
+							}); */
+							if (action) {
+								router.push('/login');
+							}
+						},
+					});
 				}
 			} else if (!error.status) {
 				res.resultMsg = '네트워크 연결을 확인해 주세요';

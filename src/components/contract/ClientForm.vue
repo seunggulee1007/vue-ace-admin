@@ -249,7 +249,7 @@
 										type="text"
 										placeholder="입력하세요"
 										maxlength="9"
-										v-model="clientVO.contractAmt"
+										v-model="contractAmt"
 										ref="contractAmt"
 									/>
 								</div>
@@ -297,7 +297,12 @@
 				</div>
 				<div class="buttons-complete">
 					<div class="buttons">
-						<button type="submit" class="button button__save" @click="saveClient">등록</button>
+						<button type="submit" class="button button__save" @click="saveClient" v-if="!clientId">
+							등록
+						</button>
+						<button type="submit" class="button button__save" @click="saveClient" v-else>
+							수정
+						</button>
 						<button type="button" class="button button__cancel">취소</button>
 					</div>
 				</div>
@@ -323,8 +328,20 @@
 
 <script>
 import SelectBox from '@/components/common/SelectBox.vue';
-import { searchBizInfo, confirmDuple, saveClient } from '@/api/client';
+import { searchBizInfo, confirmDuple, saveClient, selectClient, modifyClient } from '@/api/client';
 export default {
+	async created() {
+		if (this.clientId) {
+			let res = await selectClient(this.clientId);
+			this.clientVO = res.data;
+			this.contractDateFrom = new Date(this.dateFormat(res.data.contractDateFrom));
+			this.contractDateTo = new Date(this.dateFormat(res.data.contractDateTo));
+			this.contractAmt = res.data.contractAmt;
+			this.idDupleResult = true;
+			this.bizResearchFlag = true;
+		}
+	},
+	props: ['clientId'],
 	data() {
 		return {
 			idDupleResult: false, // 아이디 중복 체크 여부
@@ -338,6 +355,7 @@ export default {
 				address: '',
 				crtId: this.$store.getters.getUserId,
 			},
+			contractAmt: 0,
 			openPostFlag: false,
 		};
 	},
@@ -356,21 +374,29 @@ export default {
 				return;
 			}
 		},
+		contractAmt() {
+			let contractAmt = this.contractAmt;
+			if (typeof contractAmt == 'number') {
+				contractAmt = contractAmt.toString();
+			}
+			let numbersOnly = Number(contractAmt.replace(/[^0-9]/g, '')).toString();
+			return (this.contractAmt = numbersOnly.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+		},
 	},
+
 	components: {
 		SelectBox,
 	},
 	methods: {
 		getPostData(data) {
-			console.log(data);
 			this.openPostFlag = false;
 			this.clientVO.postNo = data.zonecode; // 우편번호
 			this.clientVO.addr = data.address; // 주소
-			this.clientVO.addrEng = data.addressEnglish;
-			this.clientVO.addrType = data.addressType;
-			this.clientVO.apartYn = data.apartment;
-			this.clientVO.roadNm = data.roadname;
-			this.clientVO.roadNmCd = data.roadnameCode;
+			this.clientVO.addrEng = data.addressEnglish; // 영문 주소
+			this.clientVO.addrType = data.addressType; // 주소 타입
+			this.clientVO.apartYn = data.apartment; // 연립주택 여부
+			this.clientVO.roadNm = data.roadname; // 도로명
+			this.clientVO.roadNmCd = data.roadnameCode; // 도로명 코드
 			this.clientVO.bcode = data.bcode;
 			this.clientVO.bname = data.bname;
 			this.clientVO.buildingCd = data.buildingCode;
@@ -433,7 +459,11 @@ export default {
 			this.clientVO.bizResultMsg = '';
 		},
 		async saveClient() {
-			this.sConfirm('등록하시겠습니까?', async () => {
+			let txt = '등록';
+			if (this.clientId) {
+				txt = '수정';
+			}
+			this.sConfirm(`${txt}하시겠습니까?`, async () => {
 				if (!this.idDupleResult) {
 					this.sAlert('거래처명 중복 체크를 진행해 주세요.');
 					this.$refs.dupleBtn.focus();
@@ -474,7 +504,7 @@ export default {
 					this.sAlert('이메일을 입력해 주세요.');
 					this.$refs.email.focus();
 					return;
-				} else if (!this.clientVO.contractAmt || this.clientVO.contractAmt < 1) {
+				} else if (!this.contractAmt || this.contractAmt < 1) {
 					this.sAlert('계약금액을 입력해 주세요.');
 					this.$refs.contractAmt.focus();
 					return;
@@ -492,7 +522,17 @@ export default {
 				}
 				this.clientVO.contractDateFrom = this.formatDate(this.contractDateFrom);
 				this.clientVO.contractDateTo = this.formatDate(this.contractDateTo);
-				let res = await saveClient(this.clientVO);
+				let contractAmt = this.contractAmt;
+				if (contractAmt.indexOf(',') != -1) {
+					contractAmt = contractAmt.replace(/,/gi, '');
+				}
+				this.clientVO.contractAmt = contractAmt;
+				let res;
+				if (!this.clientId) {
+					res = await saveClient(this.clientVO);
+				} else {
+					res = await modifyClient(this.clientVO);
+				}
 				console.log(res);
 				if (res.result == 0) {
 					this.sAlert(res.resultMsg);

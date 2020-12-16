@@ -5,10 +5,19 @@
 				<h4 class="section__title">전체 메뉴</h4>
 			</div>
 			<div class="tree-area">
-				<ul id="tree" class="tree tree-menu">
+				<!-- <ul id="tree" class="tree tree-menu">
 					<tree-view :item="treeData" @choiceMenu="choiceMenu"></tree-view>
-				</ul>
+				</ul> -->
 			</div>
+			<el-tree
+				:data="treeData"
+				node-key="menuId"
+				:default-expanded-keys="[...Array(10).keys()]"
+				:props="defaultProps"
+				accordion
+				@node-click="choiceMenu"
+			>
+			</el-tree>
 		</section>
 		<section class="section__contents">
 			<div class="inner-wrap">
@@ -181,16 +190,17 @@
 </template>
 
 <script>
-import TreeView from '@/components/common/TreeView.vue';
+// import TreeView from '@/components/common/TreeView.vue';
 import { selectMenuList, updateMenu, insertMenu, deleteMenu, moveMenu } from '@/api/menu';
 import { EventBus } from '@/utils/eventBus';
 export default {
 	created() {
 		this.selectMenuList();
+		console.log(this.treeData);
 		EventBus.$on('choiceMenu', this.choiceMenu);
 	},
 	components: {
-		TreeView,
+		// TreeView,
 	},
 	methods: {
 		async selectMenuList() {
@@ -314,7 +324,7 @@ export default {
 	},
 	data() {
 		return {
-			treeData: {},
+			treeData: [],
 			parMenuNm: '',
 			addFlag: false,
 			childCnt: 0,
@@ -324,6 +334,10 @@ export default {
 				menuYn: 1,
 				useYn: 'Y',
 				crtId: this.$store.getters.getUserId,
+			},
+			defaultProps: {
+				children: 'children',
+				label: 'name',
 			},
 		};
 	},

@@ -119,6 +119,13 @@ Vue.mixin({
 
 			return year + type + month + type + day;
 		},
+		dateFormat(value, type) {
+			if (!value) return '';
+			if (!type) {
+				type = '-';
+			}
+			return value.substr(0, 4) + type + value.substr(4, 2) + type + value.substr(6, 2);
+		},
 	},
 });
 

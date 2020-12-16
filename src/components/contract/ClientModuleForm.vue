@@ -11,8 +11,14 @@
 						<option value="2">대표명</option>
 						<option value="3">사업자번호</option>
 					</select>
-					<input class="input " type="text" placeholder="입력하세요" v-model="pagingVO.searchKeyword" />
-					<button type="button" class="button">
+					<input
+						class="input "
+						type="text"
+						placeholder="입력하세요"
+						@keyup.enter="selectClientList"
+						v-model="pagingVO.searchKeyword"
+					/>
+					<button type="button" class="button" @click="selectClientList">
 						<span class="icon icon-search"></span>
 						조회
 					</button>
@@ -29,7 +35,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="row" v-for="(item, idx) in clientList" :key="item.clientId">
+							<tr
+								class="row"
+								v-for="(item, idx) in clientList"
+								:key="item.clientId"
+								@dblclick="choiceClient(item.clientId)"
+							>
 								<td>{{ idx + 1 }}</td>
 								<td>{{ item.clientNm }}</td>
 								<td>{{ item.bizNo | bizNoFilter }}</td>
@@ -167,10 +178,12 @@ export default {
 	methods: {
 		async selectClientList() {
 			let res = await selectClientList(this.pagingVO);
-			console.log(res);
 			if (res.result == 0) {
 				this.clientList = res.data;
 			}
+		},
+		choiceClient(clientId) {
+			this.$emit('choiceClient', clientId);
 		},
 	},
 };
