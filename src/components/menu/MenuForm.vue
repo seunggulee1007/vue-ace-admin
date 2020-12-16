@@ -173,7 +173,7 @@
 						<button type="button" class="button button__submit" @click="modifyMenu">
 							수정
 						</button>
-						<button type="button" class="button button__submit" @click="deleteMenu">
+						<button type="button" class="button" @click="deleteMenu">
 							삭제
 						</button>
 					</div>

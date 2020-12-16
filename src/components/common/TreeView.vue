@@ -1,10 +1,10 @@
 <template>
 	<li>
 		<div :class="{ 'lst-tree__menu': isFolder }">
-			<span v-if="isFolder" @click="toggle" class="icon-folder-open">{{ isOpen ? '-' : '+' }}</span>
 			<span @click="clickMenu(item)">{{ item.name }}</span>
+			<span v-if="isFolder" @click="toggle" class="icon-folder-open">{{ isOpen ? '-' : '+' }}</span>
 		</div>
-		<ul class="lst-tree__sub" v-show="isOpen" v-if="isFolder" style="padding-left: 1em;">
+		<ul class="lst-tree__sub" v-show="isOpen" v-if="isFolder">
 			<tree-item
 				class="lst-tree__item cursor_hand"
 				v-for="(children, index) in item.children"

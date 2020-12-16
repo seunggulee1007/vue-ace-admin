@@ -11,6 +11,7 @@
 				</p>
 			</h1>
 			<h2 class="page__title">슈퍼관리자센터</h2>
+			<h3 class="section__title--mobile">메뉴명</h3>
 			<button type="button" class="button__nav">
 				<span class="nav-bar"></span>
 				<span class="nav-bar"></span>
