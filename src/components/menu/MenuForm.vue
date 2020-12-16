@@ -1,28 +1,36 @@
 <template>
 	<div class="container admin-container">
 		<section class="section__tree">
-			<div class="section-top">
-				<h4 class="section__title">전체 메뉴</h4>
+			<div class="inner-wrap">
+				<div class="section-top">
+					<h4 class="section__title">전체 메뉴</h4>
+				</div>
+				<div class="tree-area">
+					<!-- <ul id="tree" class="tree tree-menu">
+						<tree-view :item="treeData" @choiceMenu="choiceMenu"></tree-view>
+					</ul> -->
+					<el-tree
+						:data="treeData"
+						node-key="menuId"
+						:default-expanded-keys="[...Array(10).keys()]"
+						:props="defaultProps"
+						accordion
+						@node-click="choiceMenu"
+					>
+					</el-tree>
+				</div>
 			</div>
-			<div class="tree-area">
-				<!-- <ul id="tree" class="tree tree-menu">
-					<tree-view :item="treeData" @choiceMenu="choiceMenu"></tree-view>
-				</ul> -->
-			</div>
-			<el-tree
-				:data="treeData"
-				node-key="menuId"
-				:default-expanded-keys="[...Array(10).keys()]"
-				:props="defaultProps"
-				accordion
-				@node-click="choiceMenu"
-			>
-			</el-tree>
 		</section>
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section__title">메뉴 등록</h3>
+					<h3 class="section__title">
+						<button type="button" class="button__prev-page">
+							<span class="icon icon-prev-page-white"></span>
+							<span class="blind">이전페이지</span>
+						</button>
+						메뉴 등록
+					</h3>
 				</div>
 				<div class="component-area">
 					<div class="component-box component-box-top">

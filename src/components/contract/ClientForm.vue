@@ -3,7 +3,13 @@
 		<section class="section__contents">
 			<div class="inner-wrap">
 				<div class="section-top">
-					<h3 class="section__title">고객사 등록</h3>
+					<h3 class="section__title">
+						<button type="button" class="button__prev-page">
+							<span class="icon icon-prev-page-white"></span>
+							<span class="blind">이전페이지</span>
+						</button>
+						고객사 등록
+					</h3>
 				</div>
 				<div class="component-area">
 					<div class="items-wrap">
@@ -22,12 +28,14 @@
 										ref="clientNm"
 									/>
 									<button type="button" class="button" @click="confirmDuple" ref="dupleBtn">
+										<span class="icon icon-check"></span>
 										중복확인
 									</button>
 								</div>
 								<div class="input-box" v-else>
 									<input class="input" type="text" v-model="clientVO.clientNm" readonly />
 									<button type="button" class="button" @click="researchClientNm">
+										<span class="icon icon-check"></span>
 										재조회
 									</button>
 								</div>
@@ -62,18 +70,20 @@
 									<input
 										class="input "
 										type="text"
-										placeholder="입력해 주세요"
+										placeholder="입력하세요"
 										v-model="clientVO.bizNo"
 										maxlength="12"
 										ref="bizNo"
 									/>
 									<button type="button" class="button" @click="searchBizInfo" ref="bizSearchBtn">
+										<span class="icon icon-check"></span>
 										휴/폐업 조회
 									</button>
 								</div>
 								<div class="input-box" v-else>
 									<input class="input" type="text" v-model="clientVO.bizNo" readonly />
 									<button type="button" class="button" @click="reSearchBizInfo">
+										<span class="icon icon-check"></span>
 										재 조회
 									</button>
 								</div>
@@ -157,7 +167,10 @@
 							<div class="component-box-cnt">
 								<div class="input-box">
 									<input class="input" type="text" v-model="clientVO.addr" readonly />
-									<button type="button" class="button" @click="openPostData()">주소 검색</button>
+									<button type="button" class="button" @click="openPostData()">
+										<span class="icon icon-search"></span>
+										주소 검색
+									</button>
 								</div>
 								<div class="input-box">
 									<input
@@ -314,7 +327,7 @@
 					<strong class="popup__title">주소 검색</strong>
 				</div>
 				<!-- vue-daum-postcode -->
-				<div v-if="openPostFlag">
+				<div class="popup-contents" v-if="openPostFlag">
 					<vue-daum-postcode @complete="getPostData($event)" />
 				</div>
 				<button type="button" class="button__close" @click="closeModal">

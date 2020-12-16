@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import "template_mobile.css";
 
 /* ========== layout ========== */
 .wrap{
@@ -155,9 +154,16 @@
 
 .popup .component-area{
 	min-width: 16vw;
+	max-height: 80vh;
+	box-sizing: border-box;
+	overflow: hidden;
 }
 .popup-top{
 	margin-bottom: 16px;
+}
+.popup-contents{
+	height: 100%;
+	overflow-y: auto;
 }
 
 .popup .button__close{
@@ -391,13 +397,13 @@
 .msg-canceled {
 	text-align: center;
 	font-size: 0.86em;
-	padding-top: 6px;
 	color: #67707c;
+	margin-top: 6px;
 }
 .msg-state{
 	font-size: 0.86em;
-	padding-top: 6px;
 	color: #e94560;
+	margin-top: 6px;
 }
 
 /* link */
@@ -453,6 +459,13 @@ a.link{
 
 
 /* tree */
+.tree-area .el-tree-node__content{
+	height: auto;
+}
+.tree-area .el-tree-node__content>.el-tree-node__expand-icon{
+	padding: 8px 6px;
+}
+/* tree-vue
 .tree-area{
 	font-size: 13px;
 	color: #666;
@@ -491,7 +504,7 @@ a.link{
 	font-weight: 700;
 	transition: font-weight 0.3s;
 }
-
+ */
 
 /* lst-cards */
 .lst-cards{
@@ -715,6 +728,11 @@ a.link{
 }
 .component-box-top .input-checkbox__label{
 	margin-right: 12px;
+}
+
+/* el-date-picker */
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+	width: 100%;
 }
 
 
@@ -955,4 +973,118 @@ a.link{
 	font-size: 2.4rem;
 	font-weight: 700;
 	text-align: center;
+}
+
+
+/* mobile */
+@media (max-width: 768px) {
+	/* ========== layout ========== */
+	.wrap{
+		grid: 'header'
+					'container';
+		grid-template-columns: 1fr;
+	}
+
+	.header{
+		position: relaitve;
+		z-index: 1;
+	}
+
+
+	/* header */
+	.header .page__title{
+		font-size: 14px;
+		opacity: 0.4;
+	}
+
+	/* gnb */
+	.header .button__nav{
+		display: block;
+		position: absolute;
+		right: 16px;
+		top: 12px;
+		width: 32px;
+		height: 32px;
+	}
+	.button__nav .nav-bar{
+		position: absolute;
+		left: 5px;
+		width: 22px;
+		height: 2px;
+		border-radius: 1px;
+		background-color: #fff;
+	}
+	.button__nav .nav-bar:first-of-type{
+		top: 7px;
+	}
+	.button__nav .nav-bar:nth-of-type(2){
+		top: 15px;
+	}
+	.button__nav .nav-bar:nth-of-type(3){
+		top: 23px;
+	}
+
+	.gnb-wrap{
+		display: none;
+	}
+
+	.gnb-wrap.show{
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100vw;
+		padding: 20px 24px 56px;
+		box-sizing: border-box;
+	}
+
+	.gnb-wrap .button__close{
+		position: absolute;
+		right: 16px;
+		top: 12px;
+		width: 32px;
+		height: 32px;
+	}
+	.gnb-wrap .button__close .close-bar{
+		position: absolute;
+		left: 5px;
+		width: 22px;
+		height: 2px;
+		border-radius: 1px;
+		background-color: #fff;
+	}
+	.gnb-wrap .button__close .close-bar:first-of-type{
+		transform: rotate(45deg);
+	}
+	.gnb-wrap .button__close .close-bar:nth-of-type(2){
+		transform: rotate(-45deg);
+	}
+
+
+	/* container */
+	.container{
+		height: 100vh;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	/* component */
+	.component-area{
+		padding: 24px
+	}
+
+
+	/* logo temp */
+	.logo.logo-rec .mark{
+		font-size: 2em;
+		width: 40px;
+		height: 40px;
+	}
+	.logo.logo-rec p:last-child > span:first-child{
+		font-size: 18px;
+	}
+	.logo.logo-rec p:last-child > span:last-child{
+		font-size: 12px;
+	}
 }
