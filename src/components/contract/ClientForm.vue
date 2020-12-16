@@ -152,14 +152,12 @@
 									></select-box>
 								</div>
 							</div>
+							<select-box
+								:codeGroup="'contractStatus'"
+								v-model="clientVO.contractStatus"
+								style="display:none;"
+							></select-box>
 						</div>
-
-						<select-box
-							:codeGroup="'contractStatus'"
-							v-model="clientVO.contractStatus"
-							style="display:none;"
-						></select-box>
-
 						<div class="component-box">
 							<div class="component-box-top">
 								<p class="component__title">주소</p>
@@ -323,12 +321,13 @@
 		</section>
 		<div class="popup" :class="{ show: openPostFlag }">
 			<div class="component-area">
-				<div class="popup-top">
-					<strong class="popup__title">주소 검색</strong>
-				</div>
-				<!-- vue-daum-postcode -->
-				<div class="popup-contents" v-if="openPostFlag">
-					<vue-daum-postcode @complete="getPostData($event)" />
+				<div class="inner-wrap">
+					<div class="popup-top">
+						<strong class="popup__title">주소 검색</strong>
+					</div>
+					<div class="popup-contents" v-if="openPostFlag">
+						<vue-daum-postcode @complete="getPostData($event)" />
+					</div>
 				</div>
 				<button type="button" class="button__close" @click="closeModal">
 					<span class="icon icon-close"></span>
