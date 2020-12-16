@@ -44,6 +44,11 @@
 							</tr>
 						</tbody>
 					</table>
+					<div class="buttons buttons--center">
+						<button type="button" class="button button__more">
+							더보기
+						</button>
+					</div>
 				</div>
 				<div class="component-box-wrap">
 					<div class="component-box">
@@ -174,22 +179,6 @@
 								</tr>
 							</tbody>
 						</table>
-						<div class="pagination">
-							<button type="button" class="button button__prev button__pagination">
-								<span class="icon icon-arrow"></span>
-								<span class="blind">이전</span>
-							</button>
-							<ul>
-								<li class="on"><a href="#" class="button__pagination">1</a></li>
-								<li><a href="#" class="button__pagination">2</a></li>
-								<li><a href="#" class="button__pagination">3</a></li>
-								<li><a href="#" class="button__pagination">4</a></li>
-							</ul>
-							<button type="button" class="button button__next button__pagination disabled">
-								<span class="icon icon-arrow"></span>
-								<span class="blind">다음</span>
-							</button>
-						</div>
 					</div>
 					<div class="component-box-wrap">
 						<div class="component-box">

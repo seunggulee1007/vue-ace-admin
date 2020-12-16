@@ -4,6 +4,9 @@
 	max-height: 50vh;
 	overflow-y: auto;
 }
+.table-wrap * + *{
+	margin-top: 16px;
+}
 .table-wrap thead th{
 	position: sticky;
 	top: 0;

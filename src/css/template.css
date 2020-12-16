@@ -175,6 +175,11 @@
 	margin-right: 0;
 }
 
+.popup-contents .vue-daum-postcode{
+	width: 50vw;
+}
+
+
 /* common class */
 .blind {
 	position: absolute;
@@ -740,6 +745,9 @@ a.link{
 .buttons{
 	display: flex;
 	align-items: center;
+}
+.buttons.buttons--center{
+	justify-content: center;
 }
 .buttons .button + .button {
 	margin-left: 1.3em;
