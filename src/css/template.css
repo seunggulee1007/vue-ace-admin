@@ -862,23 +862,31 @@ a.link{
 	right: 6px;
 }
 
-.button-state .button-txt{
-	display: none;
-}
-.button-state .button-txt.on{
+.button-state{
 	display: block;
 	min-width: 48px;
 	color: #fff;
 	font-size: 0.86em;
-	padding: 4px;
-	border-radius: 4px;
+	padding: 6px;
+	border: 0;
 }
-.button-state .button-txt__true{
+.button-state.true{
 	background-color: #1e3799;
 }
-.button-state .button-txt__false{
+.button-state.false{
 	background-color: #e94560;
 }
+
+.button-state .button-txt{
+	display: none;
+}
+.button-state.true .button-txt__true{
+	display: block;
+}
+.button-state.false .button-txt__false{
+	display: block;
+}
+
 
 .button__logout{
 	display: flex;

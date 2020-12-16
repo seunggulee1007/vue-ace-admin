@@ -48,15 +48,9 @@
 									{{ item.contractDateFrom | dateFilter }} ~ {{ item.contractDateTo | dateFilter }}
 								</td>
 								<td>
-									<button type="button" class="button-state">
-										<span
-											class="button-txt button-txt__true on"
-											:class="{
-												'button-txt__true on': item.clientStatus == '2',
-												'button-txt__false on': item.clientStatus == '3',
-											}"
-											>계약중</span
-										>
+									<button type="button" class="button button-state true">
+										<span class="button-txt button-txt__true">계약중</span>
+										<span class="button-txt button-txt__false">계약해지</span>
 									</button>
 								</td>
 							</tr>
@@ -96,8 +90,8 @@
 									<td>1</td>
 									<td>유연근무</td>
 									<td>
-										<button type="button" class="button-state">
-											<span class="button-txt button-txt__true on">사용</span>
+										<button type="button" class="button button-state true">
+											<span class="button-txt button-txt__true">사용</span>
 											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
@@ -106,8 +100,8 @@
 									<td>2</td>
 									<td>영업CRM</td>
 									<td>
-										<button type="button" class="button-state">
-											<span class="button-txt button-txt__true on">사용</span>
+										<button type="button" class="button button-state true">
+											<span class="button-txt button-txt__true">사용</span>
 											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
@@ -116,9 +110,9 @@
 									<td>3</td>
 									<td>비용정산</td>
 									<td>
-										<button type="button" class="button-state">
+										<button type="button" class="button button-state true">
 											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false on">미사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
 								</tr>
@@ -126,9 +120,9 @@
 									<td>4</td>
 									<td>WEB 주문</td>
 									<td>
-										<button type="button" class="button-state">
+										<button type="button" class="button button-state false">
 											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false on">미사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
 								</tr>
@@ -136,9 +130,9 @@
 									<td>5</td>
 									<td>구매 SCM</td>
 									<td>
-										<button type="button" class="button-state">
+										<button type="button" class="button button-state false">
 											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false on">미사용</span>
+											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
 								</tr>
@@ -146,8 +140,8 @@
 									<td>6</td>
 									<td>EIS</td>
 									<td>
-										<button type="button" class="button-state">
-											<span class="button-txt button-txt__true on">사용</span>
+										<button type="button" class="button button-state true">
+											<span class="button-txt button-txt__true">사용</span>
 											<span class="button-txt button-txt__false">미사용</span>
 										</button>
 									</td>
