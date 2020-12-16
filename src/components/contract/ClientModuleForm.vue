@@ -40,6 +40,7 @@
 								v-for="(item, idx) in clientList"
 								:key="item.clientId"
 								@dblclick="choiceClient(item.clientId)"
+								@click="choiceItem(item)"
 							>
 								<td>{{ idx + 1 }}</td>
 								<td>{{ item.clientNm }}</td>
@@ -73,8 +74,9 @@
 				<div class="component-area">
 					<div class="component-top">
 						<strong class="content__title">
-							고객사명
+							{{ clientNm }}
 						</strong>
+						<el-switch v-model="immediateYn"> </el-switch>
 					</div>
 					<div class="table-wrap">
 						<table class="table table-hover">
@@ -86,61 +88,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="row">
-									<td>1</td>
-									<td>유연근무</td>
+								<tr
+									class="row"
+									v-for="(item, idx) in clientMenuList"
+									:key="item.clientMenuId + item.menuNm"
+								>
+									<td>{{ idx + 1 }}</td>
+									<td>{{ item.menuNm }}</td>
 									<td>
-										<button type="button" class="button button-state true">
-											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false">미사용</span>
-										</button>
-									</td>
-								</tr>
-								<tr class="row">
-									<td>2</td>
-									<td>영업CRM</td>
-									<td>
-										<button type="button" class="button button-state true">
-											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false">미사용</span>
-										</button>
-									</td>
-								</tr>
-								<tr class="row">
-									<td>3</td>
-									<td>비용정산</td>
-									<td>
-										<button type="button" class="button button-state true">
-											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false">미사용</span>
-										</button>
-									</td>
-								</tr>
-								<tr class="row">
-									<td>4</td>
-									<td>WEB 주문</td>
-									<td>
-										<button type="button" class="button button-state false">
-											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false">미사용</span>
-										</button>
-									</td>
-								</tr>
-								<tr class="row">
-									<td>5</td>
-									<td>구매 SCM</td>
-									<td>
-										<button type="button" class="button button-state false">
-											<span class="button-txt button-txt__true">사용</span>
-											<span class="button-txt button-txt__false">미사용</span>
-										</button>
-									</td>
-								</tr>
-								<tr class="row">
-									<td>6</td>
-									<td>EIS</td>
-									<td>
-										<button type="button" class="button button-state true">
+										<button
+											type="button"
+											class="button button-state"
+											:class="{ true: item.useYn == 'Y', false: item.useYn == 'N' }"
+											@click="updateUseFlag(item.menuId)"
+										>
 											<span class="button-txt button-txt__true">사용</span>
 											<span class="button-txt button-txt__false">미사용</span>
 										</button>
@@ -162,9 +123,20 @@
 
 <script>
 import { selectClientList } from '@/api/client';
+import { selectClientMenuList, syncClientMenu } from '@/api/clientModule';
 export default {
-	created() {
-		this.selectClientList();
+	async created() {
+		await this.selectClientList();
+		if (this.clientList.length > 0) {
+			this.clientId = this.clientList[0].clientId;
+			this.clientNm = this.clientList[0].clientNm;
+		}
+	},
+	watch: {
+		clientId() {
+			this.selectClientMenuList();
+			this.clientMenuVO.clientId = this.clientId;
+		},
 	},
 	data() {
 		return {
@@ -173,6 +145,11 @@ export default {
 				searchKind: '1',
 			},
 			clientList: [],
+			clientId: 0,
+			clientMenuList: [],
+			clientMenuVO: {},
+			clientNm: '',
+			immediateYn: false,
 		};
 	},
 	methods: {
@@ -184,6 +161,30 @@ export default {
 		},
 		choiceClient(clientId) {
 			this.$emit('choiceClient', clientId);
+		},
+		async selectClientMenuList() {
+			let res = await selectClientMenuList(this.clientId);
+			if (res.result == 0) {
+				this.clientMenuList = res.data;
+			}
+		},
+		choiceItem(item) {
+			if (this.clientId == item.clientId) {
+				return;
+			}
+			this.clientId = item.clientId;
+		},
+		async updateUseFlag(menuId) {
+			this.sConfirm('사용 여부를 변경하시겠습니까?', async () => {
+				this.clientMenuVO.menuId = menuId;
+				this.clientMenuVO.immediateYn = this.immediateYn ? 'Y' : 'N';
+				let res = await syncClientMenu(this.clientMenuVO);
+				console.log(res);
+				if (res.result == 0) {
+					this.selectClientMenuList();
+				}
+				this.sAlert(res.resultMsg);
+			});
 		},
 	},
 };

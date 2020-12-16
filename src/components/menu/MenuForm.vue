@@ -12,7 +12,7 @@
 					<el-tree
 						:data="treeData"
 						node-key="menuId"
-						:default-expanded-keys="[...Array(10).keys()]"
+						:default-expanded-keys="[0]"
 						:props="defaultProps"
 						accordion
 						@node-click="choiceMenu"

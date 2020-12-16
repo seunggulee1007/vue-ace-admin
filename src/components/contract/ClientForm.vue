@@ -304,6 +304,23 @@
 								</div>
 							</div>
 						</div>
+						<div class="component-box">
+							<div class="component-box-top">
+								<p class="component__title">도메인 주소</p>
+							</div>
+							<div class="component-box-cnt">
+								<div class="input-box">
+									<input
+										class="input"
+										type="text"
+										placeholder="입력하세요"
+										maxlength="200"
+										v-model="clientVO.domainAddr"
+										ref="domainAddr"
+									/>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="buttons-complete">
