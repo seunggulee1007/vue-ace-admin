@@ -25,7 +25,7 @@
 			<div class="inner-wrap">
 				<div class="section-top">
 					<h3 class="section__title">
-						<button type="button" class="button__prev-page">
+						<button type="button" class="button__back">
 							<span class="icon icon-prev-page-white"></span>
 							<span class="blind">이전페이지</span>
 						</button>

@@ -4,7 +4,7 @@
 			<div class="inner-wrap">
 				<div class="section-top">
 					<h3 class="section__title">
-						<button type="button" class="button__prev-page">
+						<button type="button" class="button__back">
 							<span class="icon icon-prev-page-white"></span>
 							<span class="blind">이전페이지</span>
 						</button>
@@ -332,6 +332,7 @@
 							수정
 						</button>
 						<button type="button" class="button button__cancel">취소</button>
+						<button type="button" class="button button__back">이전페이지</button>
 					</div>
 				</div>
 			</div>

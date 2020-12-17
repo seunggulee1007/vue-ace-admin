@@ -64,7 +64,7 @@
 			<div class="inner-wrap">
 				<div class="section-top">
 					<h3 class="section__title">
-						<button type="button" class="button__prev-page">
+						<button type="button" class="button__back">
 							<span class="icon icon-prev-page-white"></span>
 							<span class="blind">이전페이지</span>
 						</button>
@@ -72,11 +72,14 @@
 					</h3>
 				</div>
 				<div class="component-area">
-					<div class="component-top">
+					<div class="component-box component-box-top">
 						<strong class="content__title">
 							{{ clientNm }}
 						</strong>
-						<el-switch v-model="immediateYn"> </el-switch>
+						<div class="switch-box">
+							<p class="component__title">즉시반영</p>
+							<el-switch v-model="immediateYn"> </el-switch>
+						</div>
 					</div>
 					<div class="table-wrap">
 						<table class="table table-hover">
@@ -109,11 +112,6 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>
-				</div>
-				<div class="buttons-complete">
-					<div class="buttons">
-						<button type="submit" class="button button__save">저장</button>
 					</div>
 				</div>
 			</div>
