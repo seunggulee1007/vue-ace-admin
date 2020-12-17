@@ -871,6 +871,18 @@ a.link{
 	right: 6px;
 }
 
+.button-state__add .button-txt{
+	display: none;
+}
+.button-state__add.add .button-txt__add{
+	display: flex;
+	
+}
+.button-state__add.write .button-txt__write{
+	display: block;
+}
+
+
 .button-state{
 	display: block;
 	min-width: 48px;

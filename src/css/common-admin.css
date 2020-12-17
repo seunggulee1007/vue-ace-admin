@@ -67,7 +67,7 @@
 	display: flex;
 	align-items: center;
 }
-.admin-container .section-top .section__title .button__prev-page{
+.admin-container .section-top .section__title .button__back{
 	display: none;
 }
 

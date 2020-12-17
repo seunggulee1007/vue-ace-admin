@@ -35,15 +35,26 @@
 				<div class="component-area">
 					<div class="component-box component-box-top">
 						<h5 class="content__title" v-if="!addFlag && parMenuNm">{{ parMenuNm }}</h5>
-						<h5 class="content__title" v-else>{{ choiceMenuNm }}</h5>
+						<h5 class="content__title" v-else>
+							{{ choiceMenuNm }}
+						</h5>
 						<button
 							type="button"
-							class="button button__add"
+							class="button button-state__add add"
 							v-if="addFlag && menuVO.menuYn == 1"
 							@click="addSubMenu"
 						>
 							<span class="icon icon-add"></span>
-							하위메뉴 추가
+							하위 메뉴 추가
+						</button>
+						<button
+							type="button"
+							class="button button-red-full"
+							v-if="!addFlag && parMenuNm"
+							@click="addSubMenu"
+							disabled
+						>
+							하위 메뉴 등록 중
 						</button>
 					</div>
 					<div class="component-box">
