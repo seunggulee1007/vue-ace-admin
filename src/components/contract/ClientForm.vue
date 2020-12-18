@@ -361,6 +361,7 @@ import SelectBox from '@/components/common/SelectBox.vue';
 import { searchBizInfo, confirmDuple, saveClient, selectClient, modifyClient } from '@/api/client';
 export default {
 	async created() {
+		console.log('이건 고객 등록 폼이야');
 		if (this.clientId) {
 			let res = await selectClient(this.clientId);
 			this.clientVO = res.data;

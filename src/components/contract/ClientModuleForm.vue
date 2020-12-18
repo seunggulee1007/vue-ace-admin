@@ -105,7 +105,7 @@
 											type="button"
 											class="button button-state"
 											:class="{ true: item.useYn == 'Y', false: item.useYn == 'N' }"
-											@click="updateUseFlag(item.menuId)"
+											@click="updateUseFlag(item)"
 										>
 											<span class="button-txt button-txt__true">사용</span>
 											<span class="button-txt button-txt__false">미사용</span>
@@ -164,6 +164,7 @@ export default {
 		},
 		async selectClientMenuList() {
 			let res = await selectClientMenuList(this.clientId);
+			console.log(res);
 			if (res.result == 0) {
 				this.clientMenuList = res.data;
 			}
@@ -174,12 +175,12 @@ export default {
 			}
 			this.clientId = item.clientId;
 		},
-		async updateUseFlag(menuId) {
+		async updateUseFlag(item) {
 			this.sConfirm('사용 여부를 변경하시겠습니까?', async () => {
-				this.clientMenuVO.menuId = menuId;
+				this.clientMenuVO = item;
 				this.clientMenuVO.immediateYn = this.immediateYn ? 'Y' : 'N';
+				this.clientMenuVO.useYn = this.clientMenuVO.useYn == 'Y' ? 'N' : 'Y';
 				let res = await syncClientMenu(this.clientMenuVO);
-				console.log(res);
 				if (res.result == 0) {
 					this.selectClientMenuList();
 				}
