@@ -1,7 +1,7 @@
 <template>
 	<select class="input-select" v-if="codeFlag" @input="updateVal($event.target.value)">
 		<option v-for="item in codeList" :key="item.codeId" :value="item.codeId"
-			>{{ `${item.code}(${item.codeNm})-${item.codeInfo}` }}
+			>{{ `${item.int_1}(${item.codeNm})-${item.codeInfo}` }}
 		</option>
 	</select>
 	<select class="input-select" v-else @input="updateVal($event.target.value)">

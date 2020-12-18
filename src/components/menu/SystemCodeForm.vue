@@ -191,22 +191,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="component-box">
-							<div class="component-box-top">
-								<p class="component__title">코드</p>
-							</div>
-							<div class="component-box-cnt">
-								<div class="input-box">
-									<input
-										class="input"
-										type="text"
-										placeholder="입력하세요"
-										v-model="codeVO.code"
-										ref="code"
-									/>
-								</div>
-							</div>
-						</div>
+
 						<div class="component-box">
 							<div class="component-box-top">
 								<p class="component__title">코드 명</p>
@@ -571,8 +556,6 @@ export default {
 			this.selectCodeList();
 		},
 		choiceCode(item) {
-			console.log('item:::');
-			console.log(item);
 			this.codeVO = JSON.parse(JSON.stringify(item));
 		},
 		async selectCodeList() {
@@ -580,7 +563,6 @@ export default {
 			let res = await selectCodeList(this.codePagingVO);
 			if (res.result == 0) {
 				this.codeList = res.data;
-				console.log(this.codeList);
 			}
 			this.codeVO.codeMasterNm = this.codeMasterNm;
 			this.codeVO.codeMasterId = this.codeMasterId;
@@ -599,11 +581,7 @@ export default {
 			}
 			console.log(this.codeVO);
 			this.sConfirm(txt + '하시겠습니까?', async () => {
-				if (!this.codeVO.code) {
-					this.sAlert('코드를 입력해 주세요.');
-					this.$refs.code.focus();
-					return;
-				} else if (!this.codeVO.codeNm) {
+				if (!this.codeVO.codeNm) {
 					this.sAlert('코드명을 입력해 주세요.');
 					this.$refs.codeNm.focus();
 					return;
