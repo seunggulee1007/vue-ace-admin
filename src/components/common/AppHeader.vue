@@ -24,19 +24,21 @@
 							<p>메뉴</p>
 						</li>
 						<li class="lst-gnb__item">
-							<a href="/menu/menu" class="lst-gnb__link">메뉴 등록</a>
+							<router-link to="/menu/menu" class="lst-gnb__link">메뉴 등록</router-link>
 						</li>
 						<li class="lst-gnb__item">
-							<a href="/menu/systemCode" class="lst-gnb__link">시스템 코드 등록</a>
+							<router-link to="/menu/systemCode" class="lst-gnb__link">시스템 코드 등록</router-link>
 						</li>
 						<li class="lst-gnb__title">
 							<p>계약관리</p>
 						</li>
 						<li class="lst-gnb__item">
-							<a href="/contract/client" class="lst-gnb__link">고객사 등록</a>
+							<router-link to="/contract/client" class="lst-gnb__link">고객사 등록</router-link>
 						</li>
 						<li class="lst-gnb__item">
-							<a href="/contract/clientModule" class="lst-gnb__link">고객사 모듈 등록</a>
+							<router-link to="/contract/clientModule" class="lst-gnb__link"
+								>고객사 모듈 등록</router-link
+							>
 						</li>
 					</ul>
 					<button type="button" class="button__close">
