@@ -4,59 +4,61 @@
 			<div class="section-top">
 				<h4 class="section__title">고객사 현황</h4>
 			</div>
-			<div class="lst-wrap">
-				<div class="input-box">
-					<select v-model="pagingVO.searchKind">
-						<option value="1">고객사명</option>
-						<option value="2">대표명</option>
-						<option value="3">사업자번호</option>
-					</select>
-					<input
-						class="input "
-						type="text"
-						placeholder="입력하세요"
-						@keyup.enter="selectClientList"
-						v-model="pagingVO.searchKeyword"
-					/>
-					<button type="button" class="button" @click="selectClientList">
-						<span class="icon icon-search"></span>
-						조회
-					</button>
-				</div>
-				<div class="table-wrap">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>No.</th>
-								<th>고객사명</th>
-								<th>사업자번호</th>
-								<th>계약기간</th>
-								<th>계약해지</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr
-								class="row"
-								v-for="(item, idx) in clientList"
-								:key="item.clientId"
-								@dblclick="choiceClient(item.clientId)"
-								@click="choiceItem(item)"
-							>
-								<td>{{ idx + 1 }}</td>
-								<td>{{ item.clientNm }}</td>
-								<td>{{ item.bizNo | bizNoFilter }}</td>
-								<td>
-									{{ item.contractDateFrom | dateFilter }} ~ {{ item.contractDateTo | dateFilter }}
-								</td>
-								<td>
-									<button type="button" class="button button-state true">
-										<span class="button-txt button-txt__true">계약중</span>
-										<span class="button-txt button-txt__false">계약해지</span>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+			<div class="inner-wrap">
+				<div class="lst-wrap">
+					<div class="input-box">
+						<select v-model="pagingVO.searchKind">
+							<option value="1">고객사명</option>
+							<option value="2">대표명</option>
+							<option value="3">사업자번호</option>
+						</select>
+						<input
+							class="input "
+							type="text"
+							placeholder="입력하세요"
+							@keyup.enter="selectClientList"
+							v-model="pagingVO.searchKeyword"
+						/>
+						<button type="button" class="button" @click="selectClientList">
+							<span class="icon icon-search"></span>
+							조회
+						</button>
+					</div>
+					<div class="table-wrap">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>고객사명</th>
+									<th>사업자번호</th>
+									<th>계약기간</th>
+									<th>계약해지</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									class="row"
+									v-for="(item, idx) in clientList"
+									:key="item.clientId"
+									@dblclick="choiceClient(item.clientId)"
+									@click="choiceItem(item)"
+								>
+									<td>{{ idx + 1 }}</td>
+									<td>{{ item.clientNm }}</td>
+									<td>{{ item.bizNo | bizNoFilter }}</td>
+									<td>
+										{{ item.contractDateFrom | dateFilter }} ~ {{ item.contractDateTo | dateFilter }}
+									</td>
+									<td>
+										<button type="button" class="button button-state true">
+											<span class="button-txt button-txt__true">계약중</span>
+											<span class="button-txt button-txt__false">계약해지</span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</section>

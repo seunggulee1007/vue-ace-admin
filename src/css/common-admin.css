@@ -212,8 +212,9 @@
 		padding: 0 48px 0 0;
 	}
 
-	.admin-header .gnb-wrap{
+	.admin-header .gnb-wrap.show{
 		background-color: #16213e;
+		z-index: 100;
 	}
 	
 	.admin-header .lst-gnb{
@@ -249,7 +250,8 @@
 		overflow-y: hidden;
 	}
 	.admin-container .section__tree .inner-wrap,
-	.admin-container .section__list .inner-wrap{
+	.admin-container .section__list .inner-wrap,
+	.admin-container .section__contents .inner-wrap{
 		overflow-y: auto;
 		height: 100%;
 	}
@@ -276,7 +278,7 @@
 		display: flex;
 		z-index: 1;
 	}
-	.admin-container .section-top .section__title .button__prev-page{
+	.admin-container .section-top .section__title .button__back{
 		display: block;
 		padding-right: 16px;
 	}

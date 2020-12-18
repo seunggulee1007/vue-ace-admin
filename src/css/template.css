@@ -1123,6 +1123,13 @@ a.link{
 		padding: 24px
 	}
 
+	/* popup */
+	.popup.show{
+		height: calc(100vh - 56px);
+	}
+	.popup-contents .vue-daum-postcode{
+		width: 100%;
+	}
 
 	/* logo temp */
 	.logo.logo-rec .mark{
