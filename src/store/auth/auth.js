@@ -6,7 +6,6 @@ import getters from './getters';
 let Auth = {
 	state: () => ({
 		userId: getCookie(process.env.VUE_APP_USER_ID) || '',
-		userNm: getCookie(process.env.VUE_APP_USER_NM) || '',
 		token: getCookie(process.env.VUE_APP_AUTH_TOKEN) || '',
 	}),
 	getters,

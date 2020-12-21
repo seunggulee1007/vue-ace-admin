@@ -211,12 +211,12 @@
 <script>
 // import TreeView from '@/components/common/TreeView.vue';
 import { selectMenuList, updateMenu, insertMenu, deleteMenu, moveMenu } from '@/api/menu';
-import { EventBus } from '@/utils/eventBus';
+//import { EventBus } from '@/utils/eventBus';
 export default {
 	created() {
 		this.selectMenuList();
 		console.log(this.treeData);
-		EventBus.$on('choiceMenu', this.choiceMenu);
+		// EventBus.$on('choiceMenu', this.choiceMenu);
 	},
 	components: {
 		// TreeView,

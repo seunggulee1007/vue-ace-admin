@@ -8,10 +8,4 @@ export default {
 	getUserId(state) {
 		return state.userId;
 	},
-	getSectionPush(state) {
-		return state.sectionPush;
-	},
-	getSpinnerStatus(state) {
-		return state.spinnerStatus;
-	},
 };

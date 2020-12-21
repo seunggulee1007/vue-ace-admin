@@ -13,8 +13,6 @@ function createInstance() {
 const instance = createInstance();
 //test
 function doAxios(url, method, params, config) {
-	store.state.spinnerStatus = true;
-	console.log();
 	return instance({
 		url,
 		method,
@@ -22,7 +20,6 @@ function doAxios(url, method, params, config) {
 		config,
 	})
 		.then(response => {
-			store.state.spinnerStatus = false;
 			// 토큰을 계속 갱신해 준다. 토큰은 20분간 유효하다.
 			if (response.headers.ACCESS_TOKEN) {
 				store.commit('setToken', response.headers.ACCESS_TOKEN);
@@ -31,7 +28,6 @@ function doAxios(url, method, params, config) {
 			return response.data;
 		})
 		.catch(error => {
-			store.state.spinnerStatus = false;
 			let res = {
 				result: -1,
 			};
