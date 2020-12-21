@@ -47,6 +47,8 @@
 						<span class="blind">메뉴닫기</span>
 					</button>
 				</nav>
+			</div>
+			<div class="buttons">
 				<button class="button__logout" @click="logoutUser">
 					<span class="icon icon-logout"></span>
 					로그아웃
