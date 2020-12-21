@@ -86,7 +86,7 @@
 										id="pageTypePage"
 										value="2"
 										class="input input-radio"
-										v-model="menuVO.menuYn"
+										v-model="menuYn"
 									/>
 									<label for="pageTypePage">페이지</label>
 								</li>
@@ -97,7 +97,7 @@
 										value="1"
 										id="pageTypeGroup"
 										class="input input-radio"
-										v-model="menuVO.menuYn"
+										v-model="menuYn"
 									/>
 									<label for="pageTypeGroup">메뉴</label>
 								</li>
@@ -218,6 +218,17 @@ export default {
 		console.log(this.treeData);
 		// EventBus.$on('choiceMenu', this.choiceMenu);
 	},
+	watch: {
+		menuYn(newVal, oldVal) {
+			if (this.menuVO.menuId && newVal == '2') {
+				this.sConfirm(
+					'메뉴를 페이지로 변경하시면 하위 등록된 메뉴들은 사용하실 수 없습니다.\n 그래도 변경하시겠습니까?',
+					null,
+					() => (this.menuYn = oldVal),
+				);
+			}
+		},
+	},
 	components: {
 		// TreeView,
 	},
@@ -240,6 +251,7 @@ export default {
 					this.$refs.menuNm.focus();
 					return;
 				}
+				this.menuVO.menuYn = this.menuYn;
 				let res = await insertMenu(this.menuVO);
 				if (res.result == 0) {
 					this.selectMenuList();
@@ -262,6 +274,7 @@ export default {
 				}
 				this.menuVO = JSON.parse(JSON.stringify(data));
 				this.choiceMenuNm = data.menuNm;
+				this.choiceUseYn = data.useYn;
 				this.menuVO.chgId = this.$store.getters.getUserId;
 				this.childCnt = this.menuVO.children.length;
 				delete this.menuVO.children;
@@ -272,6 +285,7 @@ export default {
 			let parMenuId = this.menuVO.menuId;
 			this.parMenuNm = this.menuVO.menuNm;
 			this.addFlag = false;
+			this.menuYn = 1;
 			this.menuVO = {
 				menuYn: 1,
 				useYn: 'Y',
@@ -348,6 +362,8 @@ export default {
 			addFlag: false,
 			childCnt: 0,
 			choiceMenuNm: '',
+			choiceUseYn: '',
+			menuYn: 1,
 			menuVO: {
 				parMenuId: 0,
 				menuYn: 1,

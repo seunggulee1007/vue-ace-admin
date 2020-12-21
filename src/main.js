@@ -20,19 +20,10 @@ Vue.use(VCalendar);
 Vue.mixin({
 	methods: {
 		// 전역 알림 창
-		sAlert(text, title, okLabel, okFunction) {
-			title = title ? title : '알림';
-
-			text = text ? text : '';
-			okLabel = okLabel ? okLabel : '확인';
-
+		sAlert(text = '', title = '알림', okLabel = '확인', okFunction) {
 			this.$alert(text, title, {
 				confirmButtonText: okLabel,
 				callback: action => {
-					/*this.$message({
-						type: 'info',
-						message: `action: ${action}`,
-					}); */
 					if (action) {
 						if (typeof okFunction == 'function') {
 							okFunction();
@@ -42,25 +33,19 @@ Vue.mixin({
 			});
 		},
 		// 전역 확인 창
-		async sConfirm(text, successFunction) {
+		async sConfirm(text, successFunction, falseFunction) {
 			this.$confirm(text, '확인', {
 				confirmButtonText: '예',
 				cancelButtonText: '아니오',
 				type: 'warning',
-			})
-				.then(() => {
-					/*this.$message({
-						type: 'success',
-						message: 'Delete completed',
-					});*/
-					successFunction();
-				})
-				.catch(() => {
-					/*this.$message({
-						type: 'info',
-						message: 'Delete canceled',
-					});*/
-				});
+				callback: action => {
+					if (action === 'confirm') {
+						if (typeof successFunction == 'function') successFunction();
+					} else if (action === 'cancel') {
+						falseFunction();
+					}
+				},
+			});
 		},
 		checkBizNo(bizNo) {
 			// 사업자 번호 체크
@@ -103,10 +88,7 @@ Vue.mixin({
 
 			return year + '-' + month + '-' + day;
 		},
-		formatDate(date, type) {
-			if (!type) {
-				type = '';
-			}
+		formatDate(date, type = '') {
 			let year = date.getFullYear();
 			let month = new String(date.getMonth() + 1);
 			let day = new String(date.getDate());
@@ -119,11 +101,8 @@ Vue.mixin({
 
 			return year + type + month + type + day;
 		},
-		dateFormat(value, type) {
+		dateFormat(value, type = '-') {
 			if (!value) return '';
-			if (!type) {
-				type = '-';
-			}
 			return value.substr(0, 4) + type + value.substr(4, 2) + type + value.substr(6, 2);
 		},
 	},
@@ -173,11 +152,8 @@ Vue.filter('bizNoFilter', function(value, type) {
 	return formatNum;
 });
 
-Vue.filter('dateFilter', (value, type) => {
+Vue.filter('dateFilter', (value, type = '-') => {
 	if (!value) return '';
-	if (!type) {
-		type = '-';
-	}
 	return value.substr(0, 4) + type + value.substr(4, 2) + type + value.substr(6, 2);
 });
 

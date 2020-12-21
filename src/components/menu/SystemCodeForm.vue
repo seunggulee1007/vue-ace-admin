@@ -11,8 +11,14 @@
 						<option value="2">그룹 정보</option>
 					</select>
 					<div class="input-box">
-						<input class="input" type="text" v-model="pagingVO.searchKeyword" placeholder="입력하세요" />
-						<button type="button" class="button" @click="selectCodeMasterList">
+						<input
+							class="input"
+							type="text"
+							v-model="pagingVO.searchKeyword"
+							@keyup.enter="searchCodeMasterList"
+							placeholder="입력하세요"
+						/>
+						<button type="button" class="button" @click="searchCodeMasterList">
 							<span class="icon icon-search"></span>
 							조회
 						</button>
@@ -45,7 +51,12 @@
 						</tbody>
 					</table>
 					<div class="buttons buttons--center">
-						<button type="button" class="button button__more">
+						<button
+							type="button"
+							class="button button__more"
+							v-if="codeMasterList.length > 10"
+							@click="getMoreCodeMasterList"
+						>
 							더보기
 						</button>
 					</div>
@@ -66,7 +77,7 @@
 							<p class="component__title">그룹명</p>
 						</div>
 						<div class="component-box-cnt">
-							<div class="input-box">
+							<div class="input-box" v-if="!groupDupleResult">
 								<input
 									class="input"
 									type="text"
@@ -74,11 +85,19 @@
 									v-model="codeMasterVO.codeMasterNm"
 									ref="codeMasterNm"
 								/>
-								<button type="button" class="button">
+								<button type="button" class="button" @click="confirmDuple">
 									<span class="icon icon-check"></span>
 									중복확인
 								</button>
 							</div>
+							<div class="input-box" v-else>
+								<input class="input" type="text" v-model="codeMasterVO.codeMasterNm" readonly />
+								<button type="button" class="button" @click="researchGroupNm">
+									<span class="icon icon-check"></span>
+									재조회
+								</button>
+							</div>
+							<p class="msg-state">{{ groupDupleResultMsg }}</p>
 						</div>
 					</div>
 					<div class="component-box">
@@ -132,7 +151,14 @@
 				<div class="buttons">
 					<button type="submit" class="button button__submit" @click="saveMaster">저장</button>
 					<button type="button" class="button button__cancel" @click="initMaster">초기화</button>
-					<button type="button" class="button button__delete" @click="deleteMaster">삭제</button>
+					<button
+						type="button"
+						class="button button__delete"
+						@click="deleteMaster"
+						v-if="codeMasterVO.codeMasterId"
+					>
+						삭제
+					</button>
 				</div>
 			</div>
 		</section>
@@ -156,7 +182,6 @@
 							<thead>
 								<tr>
 									<th>No.</th>
-									<th>코드</th>
 									<th>코드명</th>
 									<th>코드 정보</th>
 									<th>보기순서</th>
@@ -171,7 +196,6 @@
 									@click="choiceCode(item)"
 								>
 									<td>{{ idx + 1 }}</td>
-									<td>{{ item.code }}</td>
 									<td>{{ item.codeNm }}</td>
 									<td>{{ item.codeInfo }}</td>
 									<td>{{ item.ord }}</td>
@@ -442,7 +466,9 @@
 					<div class="buttons">
 						<button type="submit" class="button button__submit" @click="saveCode">저장</button>
 						<button type="button" class="button button__cancel" @click="initCode">초기화</button>
-						<button type="button" class="button button__delete" @click="deleteCode">삭제</button>
+						<button type="button" class="button button__delete" @click="deleteCode" v-if="codeVO.codeId">
+							삭제
+						</button>
 					</div>
 				</div>
 			</div>
@@ -452,6 +478,7 @@
 
 <script>
 import {
+	selectDupleCodeMasterNm,
 	selectCodeMasterList,
 	insertCodeMaster,
 	updateCodeMaster,
@@ -468,6 +495,8 @@ export default {
 	},
 	data() {
 		return {
+			groupDupleResult: false,
+			groupDupleResultMsg: '그룹명 중복 체크해 주세요',
 			pagingVO: {
 				pageNo: 0,
 				searchKeyword: '',
@@ -489,6 +518,10 @@ export default {
 		};
 	},
 	methods: {
+		searchCodeMasterList() {
+			this.pagingVO.pageNo = 0;
+			this.selectCodeMasterList();
+		},
 		async selectCodeMasterList() {
 			let res = await selectCodeMasterList(this.pagingVO);
 			this.codeMasterList = res.data;
@@ -500,12 +533,32 @@ export default {
 				this.initCode();
 			}
 		},
+		async confirmDuple() {
+			if (!this.codeMasterVO.codeMasterNm) {
+				this.sAlert('그룹명을 입력해 주세요');
+				return;
+			}
+			let res = await selectDupleCodeMasterNm(this.codeMasterVO.codeMasterNm);
+			console.log(res);
+			if (res.result == 0) {
+				this.groupDupleResult = true;
+			}
+			this.groupDupleResultMsg = res.resultMsg;
+		},
+		async getMoreCodeMasterList() {
+			this.pagingVO.pageNo++;
+			selectCodeMasterList();
+		},
 		async saveMaster() {
 			let txt = '저장';
 			if (this.codeMasterVO.codeMasterId) {
 				txt = '수정';
 			}
 			this.sConfirm(txt + '하시겠습니까?', async () => {
+				if (!this.groupDupleResult) {
+					this.sAlert('그룹 중복 체크를 진행해 주세요.');
+					return;
+				}
 				if (!this.codeMasterVO.codeMasterNm) {
 					this.sAlert('그룹명을 입력해주세요.');
 					this.$refs.codeMasterNm.focus();
@@ -537,6 +590,8 @@ export default {
 			this.codeMasterNm = '';
 			this.codeList = [];
 			this.initCode();
+			this.groupDupleResult = false;
+			this.groupDupleResultMsg = '그룹명 중복 체크해 주세요';
 		},
 		// 마스터 삭제
 		async deleteMaster() {
@@ -553,7 +608,13 @@ export default {
 			this.codeMasterVO = JSON.parse(JSON.stringify(item));
 			this.codeMasterId = item.codeMasterId;
 			this.codeMasterNm = item.codeMasterNm;
+			this.groupDupleResult = true;
+			this.groupDupleResultMsg = '그룹명 중복 체크해 주세요';
 			this.selectCodeList();
+		},
+		researchGroupNm() {
+			this.groupDupleResult = false;
+			this.groupDupleResultMsg = '';
 		},
 		choiceCode(item) {
 			this.codeVO = JSON.parse(JSON.stringify(item));

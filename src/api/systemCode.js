@@ -1,5 +1,10 @@
 import { doAxios } from './api';
 
+// 코드 마스터명 중복 조회
+function selectDupleCodeMasterNm(codeMasterNm) {
+	return doAxios(`/code/confirmDuple/${codeMasterNm}`, 'get');
+}
+
 // 코드 마스터 조회
 function selectCodeMasterList(pagingVO) {
 	return doAxios('/code/codeMasterList', 'get', pagingVO);
@@ -45,6 +50,7 @@ function moveCode(gu, ord, codeMasterId) {
 	return doAxios(`/code/moveCode/${gu}/${ord}/${codeMasterId}`, 'put');
 }
 export {
+	selectDupleCodeMasterNm,
 	selectCodeMasterList,
 	insertCodeMaster,
 	updateCodeMaster,
