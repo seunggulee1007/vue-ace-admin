@@ -47,8 +47,8 @@
 									<td>{{ item.clientNm }}</td>
 									<td>{{ item.bizNo | bizNoFilter }}</td>
 									<td>
-										{{ item.contractDateFrom | dateFilter }} ~
-										{{ item.contractDateTo | dateFilter }}
+										{{ item.contractDateFrom | dateFilter }}
+										~ {{ item.contractDateTo | dateFilter }}
 									</td>
 									<td>
 										<button type="button" class="button button-state true">

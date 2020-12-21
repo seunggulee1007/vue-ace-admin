@@ -11,7 +11,7 @@
 
 /* admin-header */
 .header.admin-header{
-	grid-area: nav;
+	grid-area: lnb;
 	height: 100vh;
 	padding: 32px 0;
 	color: #fff; 
@@ -19,9 +19,7 @@
 	border-bottom: 0;
 	box-shadow: 5px 0px 20px rgba(0,0,0,0.1);
 	box-sizing: border-box;
-
-	display: flex;
-	flex-direction: column;
+	
 	align-items: flex-start
 }
 
@@ -34,13 +32,21 @@
 	padding-right: 24px; 
 }
 .admin-header .lst-gnb{
+	flex-direction: column;
 	padding-top: 20px;
 	border-top: 1px solid rgba(255,255,255, 0.16);
 }
 
-.admin-header .button__logout{
+.admin-header .buttons{
+	flex-direction: column;
+	align-items: flex-start;
 	position: absolute;
 	bottom: 32px;
+}
+
+.admin-header .button__main{
+	display: flex;
+	padding: 8px 24px;
 }
 
 
