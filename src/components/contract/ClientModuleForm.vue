@@ -51,7 +51,7 @@
 										~ {{ item.contractDateTo | dateFilter }}
 									</td>
 									<td>
-										<button type="button" class="button button-state true">
+										<button type="button" class="button button-state button-state__2options true">
 											<span class="button-txt button-txt__true">계약중</span>
 											<span class="button-txt button-txt__false">계약해지</span>
 										</button>
@@ -104,7 +104,7 @@
 									<td>
 										<button
 											type="button"
-											class="button button-state"
+											class="button button-state button-state__2options"
 											:class="{ true: item.useYn == 'Y', false: item.useYn == 'N' }"
 											@click="updateUseFlag(item)"
 										>

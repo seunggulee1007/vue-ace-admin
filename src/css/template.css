@@ -33,6 +33,7 @@
 }
 .lnb{
 	grid-area: lnb;
+	min-width: 200px;
 	padding: 24px;
 	background-color: #fff;
 	box-shadow: 1px 0 10px rgba(0,0,0,.1);
@@ -104,7 +105,39 @@
 }
 
 /* lnb */
-.lnb .lst-lnb .lst-lnb__title{
+.lst-lnb > .lst-lnb__item:first-child > div{
+	font-weight: 700;
+	font-size: 1.4em;
+	color: #16213e;
+	border-bottom: 1px solid #e7ecf0;
+}
+.lnb .lst-lnb__item > div{
+	display: block;
+	padding: 12px 8px;
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.lnb .lst-lnb__item > div:hover{
+	color: #6a197d;
+	font-weight: 700;
+}
+
+.lnb  .lst-lnb__item > ul{
+	display: none;
+}
+.lst-lnb > .lst-lnb__item:first-child > ul {
+	display: block;
+}
+.lnb .lst-lnb__item.show > ul{
+	display: block;
+	padding-left: 8px;	
+}
+
+
+/* .lnb .lst-lnb .lst-lnb__title{
 	font-size: 1.5em;
 	padding: 12px 0;
 	font-weight: 700;
@@ -139,7 +172,7 @@
 	color: #6a197d;
 	font-weight: 700;
 }
-
+ */
 
 
 /* popup */
@@ -148,28 +181,53 @@
 }
 .popup.show{
 	position: fixed;
-	width: 100vw;
-	height: 100vh;
 	background-color: rgba(0,0,0, 0.4);
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 500;
 }
 
 .popup .component-area{
-	min-width: 16vw;
+	min-width: 24vw;
+	max-width: 64vw;
 	box-sizing: border-box;
+
 }
 .popup .component-area .inner-wrap{
 	max-height: 80vh;
 	overflow: hidden;
 }
 .popup-top{
-	margin-bottom: 16px;
+	padding-bottom: 16px;
+	margin-bottom: 24px;
+	border-bottom: 1px solid #e7ecf0;
 }
 .popup-contents{
-	max-height: calc(80vh - 36px);
+	max-height: calc(80vh - 61px);
 	overflow-y: auto;
+}
+
+.popup-contents .component-box-wrap{
+	display: flex;
+}
+.popup-contents .component-box-wrap > div{
+	flex-grow: 1;
+	height: 50vh;
+
+}
+.popup-contents .component-box-wrap .component-box + .component-box{
+	margin-top: 0;
+}
+
+.popup-contents .tree-area{
+	padding-top: 0;
+}
+.popup-contents .search-result-box{
+	margin-left: 8px;
+	padding: 16px;
+	border: 1px solid #e7ecf0;
+	border-radius: 8px;
 }
 
 .popup .button__close{
@@ -183,6 +241,22 @@
 
 .popup-contents .vue-daum-postcode{
 	width: 50vw;
+}
+
+.popup.popup__tree .component-area{
+	width: 56vw;
+}
+
+/* lst-search-result */
+.popup .lst-search-result .lst-search__item{
+	padding: 6px 8px;
+}
+.popup__tree .lst-search-result .lst-search__item > span + span{
+	padding-left: 8px;
+}
+.popup__tree .lst-search-result .input-checkbox__label span{
+	font-size: 1em;
+	color: #1b1c25;
 }
 
 
@@ -470,9 +544,13 @@ a.link{
 
 
 /* tree */
+.tree-area{
+	padding-top: 16px;
+}
 .tree-area .el-tree-node__content{
 	height: auto;
 }
+.tree-area .el-tree-node.is-expanded > .el-tree-node__content > .el-tree-node__label,
 .tree-area .el-tree-node.is-current > .el-tree-node__content > .el-tree-node__label{
 	font-weight: 700;
 	color: #16213e;
@@ -591,6 +669,7 @@ a.link{
 	gap: 16px;
 }
 .select-options .select-options__item{
+	display: block;
 	border: 1px solid #e7ecf0;
 	border-radius: 8px;
 	padding: 11px 0;
@@ -599,15 +678,26 @@ a.link{
 	justify-content: center;
 	align-items: center;
 }
-.select-options .select-options__item.select{
-	border-color: #6a197d;
-	background-color: #6a197d;
-	color: #fff;
+.select-options .input{
+	flex-grow: 0;
+}
+.select-options .input:checked + label{
+	color: #6a197d;
 	font-weight: 700;
 }
 
-
 /* tab */
+.tab-area .el-tabs .el-tabs__item.is-active{
+	color: #6a197d;
+	font-weight: 700;
+}
+.tab-area .el-tabs .el-tabs__item:hover{
+	color: #6a197d;
+}
+.tab-area .el-tabs .el-tabs__active-bar{
+	background-color: #6a197d;
+}
+
 .lst-tab{
 	display: flex;
 	align-items: center;
@@ -690,8 +780,7 @@ a.link{
 	color: rgba(103, 112, 124, 0.3);
 }
 .input:focus{
-	border: 2px solid #6a197d;
-	padding: 7px 11px
+	border-color: #6a197d;
 }
 
 .input--large{
@@ -725,6 +814,62 @@ a.link{
 .input-term .input-box > div,
 .input-box .el-date-editor.el-input, .el-date-editor.el-input__inner{
 	width: 100%;
+}
+
+/* full-calendar */
+.calendar.fc .fc-button-primary{
+	background-color:  #fff;
+	border-color: #b2bbca;
+	color: #666;
+}
+.calendar.fc .fc-button-primary:hover{
+	border-color: #6a197d;
+	background-color: #fff;
+	color: #6a197d;
+}
+.calendar.fc .fc-button:disabled,
+.calendar.fc .fc-button.fc-today-button:disabled{
+	background-color: #cfd5e2;
+	border-color: #9ba4b4;
+	color: #9ba4b4;
+	cursor: default;
+}
+.calendar.fc .fc-button-primary:disabled:hover{
+	border-color: #9ba4b4;
+}
+.calendar.fc .fc-button.fc-today-button{
+	background-color: #6a197d;
+	border-color: #6a197d;
+	color: #fff;
+}
+
+.calendar.fc .fc-button .fc-icon{
+	color: #666;
+}
+.calendar.fc .fc-button:hover .fc-icon{
+	color: #6a197d;
+}
+
+.calendar.fc-theme-standard th{
+	padding: 8px 0;
+	/* background-color:  */
+}
+
+.calendar.fc .fc-daygrid-day-number{
+	margin: 2px;
+}
+
+.calendar.fc .fc-daygrid-day.fc-day-today{
+	background-color: transparent;
+}
+.calendar.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number{
+	font-weight: 700;
+	background-color: #6a197d;
+	color: #fff;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	text-align: center;
 }
 
 
@@ -878,24 +1023,12 @@ a.link{
 	right: 6px;
 }
 
-.button-state__add .button-txt{
-	display: none;
-}
-.button-state__add.add .button-txt__add{
-	display: flex;
-	
-}
-.button-state__add.write .button-txt__write{
-	display: block;
-}
-
-
 .button-state{
 	display: block;
 	min-width: 48px;
 	color: #fff;
 	font-size: 0.86em;
-	padding: 6px;
+	padding: 8px;
 	border: 0;
 }
 .button-state:hover{
@@ -915,6 +1048,26 @@ a.link{
 	display: block;
 }
 .button-state.false .button-txt__false{
+	display: block;
+}
+
+.button-state.button-state__3options.opt1{
+	background-color: #1e3799;
+}
+.button-state.button-state__3options.opt2{
+	background-color: #6a197d;
+}
+.button-state.button-state__3options.opt3{
+	background-color: #e94560;
+}
+
+.button-state.button-state__3options.opt1 .button-txt__opt1{
+	display: block;
+}
+.button-state.button-state__3options.opt2 .button-txt__opt2{
+	display: block;
+}
+.button-state.button-state__3options.opt3 .button-txt__opt3{
 	display: block;
 }
 
@@ -1137,6 +1290,8 @@ a.link{
 	.popup-contents .vue-daum-postcode{
 		width: 100%;
 	}
+
+
 
 	/* logo temp */
 	.logo.logo-rec .mark{
