@@ -302,7 +302,6 @@
 }
 
 
-
 /* logo-temp */
 .logo .mark{
 	border-radius: 50%;
@@ -355,7 +354,8 @@
 	font-size: 20px;
 }
 .logo.logo-rec p:last-child > span:last-child{
-	font-size: 14px;
+	/* font-size: 14px; */
+	font-size: 1em;
 }
 
 .logo.logo-line{
@@ -366,7 +366,8 @@
 	margin-bottom: 0;
 }
 .logo.logo-line p:last-child > span:first-child {
-	font-size: 18px;
+	font-size: 1.28em;	
+	/* font-size: 18px; */
 	padding-right: 16px;
 }
 .logo.logo-line p:last-child{
@@ -374,10 +375,23 @@
 	align-items: center;
 }
 .logo.logo-line p:last-child > span:last-child{
-	font-size: 14px;
+	font-size: 1em;
+	/* font-size: 14px */
 	font-weight: 400;
 }
-
+ 
+.logo.logo--small .mark{
+	font-size: 2em;
+	width: 40px;
+	height: 40px;
+	margin-right: 12px;
+}
+.logo.logo--small p:last-child > span:first-child{
+	font-size: 1.2em;
+}
+.logo.logo--small p:last-child > span:last-child{
+	font-size: 0.85em;
+}
 
 /* section */
 .section-top{

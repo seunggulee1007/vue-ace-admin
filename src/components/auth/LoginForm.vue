@@ -10,7 +10,7 @@
 					<span>Agile Centric Efficiency</span>
 				</p>
 			</h1>
-			<h2 class="section-title">로그인</h2>
+			<h2 class="section__title">슈퍼관리자센터</h2>
 			<form action="" method="post" class="form__login">
 				<div class="input-box input-box-icon">
 					<span class="icon icon__large icon-user"></span>

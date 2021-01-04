@@ -12,7 +12,13 @@
 	padding: 56px;
 	box-sizing: border-box;
 }
-.section__login .section-title{
+.section__login > .flex-box{
+	justify-content: space-between;
+}
+.section__login .page__title{
+	padding: 0;
+}
+.section__login .section__title{
 	font-size: 2.4em;
 	margin: 24px 0 28px;
 }
@@ -70,7 +76,14 @@
 	.section__login .logo.logo-rec{
 		justify-content: center;
 	}
-	.section__login .section-title{
+	.section__login > .flex-box{
+		flex-direction: column;
+		align-items: center;
+	}
+	.section__login .page__title{
+		padding-top: 4px;
+	}
+	.section__login .section__title{
 		font-size: 2em;
 		text-align: center;
 	}
